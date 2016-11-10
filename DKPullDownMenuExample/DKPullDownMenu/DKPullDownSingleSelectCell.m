@@ -17,7 +17,7 @@
 - (UIImageView *)cheakView
 {
     if (_cheakView == nil) {
-        _cheakView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"选中对号"]];
+        _cheakView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"single_select"]];
         self.accessoryView = _cheakView;
     }
     return _cheakView;

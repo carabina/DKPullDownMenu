@@ -19,6 +19,8 @@
 		D7B9FD1C1DD426AC00356F4A /* DKPullDownSingleSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD1B1DD426AC00356F4A /* DKPullDownSingleSelectCell.m */; };
 		D7B9FD1F1DD4341800356F4A /* DKPullDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD1E1DD4341800356F4A /* DKPullDownMenu.m */; };
 		D7B9FD221DD4367300356F4A /* DKPullDownTitleButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD211DD4367300356F4A /* DKPullDownTitleButton.m */; };
+		D7B9FD251DD4422400356F4A /* DKPullDownMultiSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD241DD4422400356F4A /* DKPullDownMultiSelectViewController.m */; };
+		D7B9FD281DD442BF00356F4A /* DKPullDownMultiSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD271DD442BF00356F4A /* DKPullDownMultiSelectCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +46,10 @@
 		D7B9FD1E1DD4341800356F4A /* DKPullDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKPullDownMenu.m; sourceTree = "<group>"; };
 		D7B9FD201DD4367300356F4A /* DKPullDownTitleButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKPullDownTitleButton.h; sourceTree = "<group>"; };
 		D7B9FD211DD4367300356F4A /* DKPullDownTitleButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKPullDownTitleButton.m; sourceTree = "<group>"; };
+		D7B9FD231DD4422400356F4A /* DKPullDownMultiSelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKPullDownMultiSelectViewController.h; sourceTree = "<group>"; };
+		D7B9FD241DD4422400356F4A /* DKPullDownMultiSelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKPullDownMultiSelectViewController.m; sourceTree = "<group>"; };
+		D7B9FD261DD442BF00356F4A /* DKPullDownMultiSelectCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKPullDownMultiSelectCell.h; sourceTree = "<group>"; };
+		D7B9FD271DD442BF00356F4A /* DKPullDownMultiSelectCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKPullDownMultiSelectCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +119,10 @@
 				D7B9FD181DD4265300356F4A /* DKPullDownSingleSelectViewController.m */,
 				D7B9FD1A1DD426AC00356F4A /* DKPullDownSingleSelectCell.h */,
 				D7B9FD1B1DD426AC00356F4A /* DKPullDownSingleSelectCell.m */,
+				D7B9FD231DD4422400356F4A /* DKPullDownMultiSelectViewController.h */,
+				D7B9FD241DD4422400356F4A /* DKPullDownMultiSelectViewController.m */,
+				D7B9FD261DD442BF00356F4A /* DKPullDownMultiSelectCell.h */,
+				D7B9FD271DD442BF00356F4A /* DKPullDownMultiSelectCell.m */,
 			);
 			path = DKPullDownMenu;
 			sourceTree = "<group>";
@@ -193,8 +203,10 @@
 				D7B9FD221DD4367300356F4A /* DKPullDownTitleButton.m in Sources */,
 				D7B9FD161DD41B1700356F4A /* DKPullDownCover.m in Sources */,
 				D7B9FD011DD417A200356F4A /* ViewController.m in Sources */,
+				D7B9FD251DD4422400356F4A /* DKPullDownMultiSelectViewController.m in Sources */,
 				D7B9FCFE1DD417A200356F4A /* AppDelegate.m in Sources */,
 				D7B9FD1F1DD4341800356F4A /* DKPullDownMenu.m in Sources */,
+				D7B9FD281DD442BF00356F4A /* DKPullDownMultiSelectCell.m in Sources */,
 				D7B9FD1C1DD426AC00356F4A /* DKPullDownSingleSelectCell.m in Sources */,
 				D7B9FCFB1DD417A200356F4A /* main.m in Sources */,
 				D7B9FD131DD418B700356F4A /* DKPullDownBaseMenu.m in Sources */,
@@ -356,6 +368,7 @@
 				D7B9FD0F1DD417A200356F4A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

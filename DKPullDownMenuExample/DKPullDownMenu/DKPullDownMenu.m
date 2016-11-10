@@ -78,8 +78,8 @@
     [button setTitle:_titles[index] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor colorWithRed:25 /255.0 green:143/255.0 blue:238/255.0 alpha:1] forState:UIControlStateSelected];
-//    [button setImage:[UIImage imageNamed:@"标签-向下箭头"] forState:UIControlStateNormal];
-//    [button setImage:[UIImage imageNamed:@"标签-向上箭头"] forState:UIControlStateSelected];
+    [button setImage:[UIImage imageNamed:@"titleBtn_down"] forState:UIControlStateNormal];
+    [button setImage:[UIImage imageNamed:@"titleBtn_up"] forState:UIControlStateSelected];
     
     return button;
 }

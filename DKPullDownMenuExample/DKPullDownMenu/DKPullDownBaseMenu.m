@@ -69,15 +69,15 @@ NSString *const DKPullDownMenuTitleDidUpdatedNotification = @"DKPullDownMenuTitl
 - (UIView *)coverView
 {
     if (!_coverView) {
+        UIView *pullDownMenu = self.superview;
         // 设置蒙版的frame
         CGFloat coverX = 0;
-        CGFloat coverY = CGRectGetMaxY(self.frame);
+        CGFloat coverY = CGRectGetMaxY(pullDownMenu.frame);
         CGFloat coverW = self.frame.size.width;
-        CGFloat coverH = self.superview.bounds.size.height - coverY;
+        CGFloat coverH = pullDownMenu.superview.bounds.size.height - coverY;
         _coverView = [[DKPullDownCover alloc] initWithFrame:CGRectMake(coverX, coverY, coverW, coverH)];
         _coverView.backgroundColor = _coverColor;
-        
-        [self.superview addSubview:_coverView];
+        [pullDownMenu.superview addSubview:_coverView];
         __weak typeof(self) weakSelf = self;
         // 蒙版点击block
         _coverView.coverClickBlock = ^{
