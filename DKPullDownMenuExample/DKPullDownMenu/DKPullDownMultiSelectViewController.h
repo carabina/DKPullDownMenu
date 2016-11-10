@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DKPullDownMultiSelectViewController : UITableViewController
+@interface DKPullDownMultiSelectViewController : UIViewController
 
 @end

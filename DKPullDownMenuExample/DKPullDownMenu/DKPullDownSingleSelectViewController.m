@@ -8,6 +8,8 @@
 
 #import "DKPullDownSingleSelectViewController.h"
 #import "DKPullDownSingleSelectCell.h"
+#import "DKPullDownMenuManager.h"
+#import <objc/runtime.h>
 
 @interface DKPullDownSingleSelectViewController ()
 @property (nonatomic, copy) NSArray *titles;
@@ -16,15 +18,18 @@
 
 @implementation DKPullDownSingleSelectViewController
 
+/** 更新下拉菜单标题的通知 */
+UIKIT_EXTERN NSString *const DKPullDownMenuTitleDidUpdatedNotification;
+/** item关联控制器的标识 */
+UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
+
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
-    _selectedCol = 0;
-    
-    _titles = @[@"xx",@"xx",@"xxx",@"xxxx"];
+    [self setupTitles];
     
     [self.tableView registerClass:[DKPullDownSingleSelectCell class] forCellReuseIdentifier:NSStringFromClass([DKPullDownSingleSelectCell class])];
 }
@@ -34,6 +39,17 @@
     [super viewWillAppear:animated];
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_selectedCol inSection:0];
     [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+}
+
+- (void)setupTitles
+{
+    [DKPullDownMenuShareManager.pullDownMenuItems enumerateObjectsUsingBlock:^(DKPullDownMenuItem * _Nonnull item, NSUInteger idx, BOOL * _Nonnull stop) {
+        id vc = objc_getAssociatedObject(item, &DKPullDownMenuItemAssociateVcIdentifier);
+        if (self == vc) {
+            _titles = item.subTitles;
+            *stop = YES;
+        }
+    }];
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -60,9 +76,8 @@
 {
     _selectedCol = indexPath.row;
     
-    // 选中当前
+    // 选中当前cell
     DKPullDownSingleSelectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    
     // 更新菜单标题
     [[NSNotificationCenter defaultCenter] postNotificationName:DKPullDownMenuTitleDidUpdatedNotification object:self userInfo:@{@"title":cell.textLabel.text}];
 }

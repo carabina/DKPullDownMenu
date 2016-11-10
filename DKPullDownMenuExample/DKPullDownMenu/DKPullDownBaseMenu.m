@@ -31,6 +31,7 @@
 @implementation DKPullDownBaseMenu
 
 NSString *const DKPullDownMenuTitleDidUpdatedNotification = @"DKPullDownMenuTitleDidUpdatedNotification";
+NSString *const DKPullDownMenuItemAssociateVcIdentifier = @"DKPullDownMenuItemAssociateVcIdentifier";
 
 #pragma mark - Getter && Setter
 

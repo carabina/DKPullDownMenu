@@ -9,6 +9,9 @@
 #import "DKPullDownMenu.h"
 #import "DKPullDownTitleButton.h"
 #import "DKPullDownSingleSelectViewController.h"
+#import "DKPullDownMultiSelectViewController.h"
+#import "DKPullDownMenuManager.h"
+#import <objc/runtime.h>
 
 @interface DKPullDownMenu () <DKPullDownMenuDataSource>
 @property (nonatomic, weak) DKPullDownBaseMenu *menu;
@@ -20,11 +23,22 @@
 
 #pragma mark - Getter && Setter
 
+- (void)setPullDownMenuItems:(NSArray<DKPullDownMenuItem *> *)pullDownMenuItems
+{
+    _pullDownMenuItems = pullDownMenuItems;
+    DKPullDownMenuShareManager.pullDownMenuItems = pullDownMenuItems;
+    
+    if (self.frame.size.width && self.frame.size.height) {
+        // 初始化下拉菜单
+        [self setupMenu];
+    }
+}
+
 - (void)setFrame:(CGRect)frame
 {
     [super setFrame:frame];
     
-    if (frame.size.width && frame.size.height) {
+    if (frame.size.width && frame.size.height && _pullDownMenuItems.count) {
         // 初始化下拉菜单
         [self setupMenu];
     }
@@ -42,7 +56,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        if (frame.size.width && frame.size.height) {
+        if (frame.size.width && frame.size.height && _pullDownMenuItems.count) {
             // 初始化下拉菜单
             [self setupMenu];
         }
@@ -59,10 +73,30 @@
     self.menu = menu;
     [self addSubview:menu];
     
-    // 初始化标题
-    _titles = @[@"xxx",@"xxxx"];
-    // 初始化控制器
-    _viewControllers = @[[[DKPullDownSingleSelectViewController alloc] init],[[DKPullDownSingleSelectViewController alloc] init]];
+    NSMutableArray *titles = [NSMutableArray array];
+    NSMutableArray *viewControllers = [NSMutableArray array];
+    [self.pullDownMenuItems enumerateObjectsUsingBlock:^(DKPullDownMenuItem * _Nonnull item, NSUInteger idx, BOOL * _Nonnull stop) {
+        // 标题
+        [titles addObject:item.title];
+        id vc;
+        switch (item.type) {
+            case DKPullDownMenuItemTypeSingle:
+                vc = [[DKPullDownSingleSelectViewController alloc] init];
+                break;
+            case DKPullDownMenuItemTypeMulti:
+                vc = [[DKPullDownMultiSelectViewController alloc] init];
+                break;
+            case DKPullDownMenuItemTypeCustom:
+                vc = item.customViewController;
+        }
+        // item关联控制器
+        objc_setAssociatedObject(item, &DKPullDownMenuItemAssociateVcIdentifier, vc, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        // 控制器
+        [viewControllers addObject:vc];
+    }];
+    
+    _titles = [titles copy];
+    _viewControllers = [viewControllers copy];
 }
 
 #pragma mark - <DKPullDownMenuDataSource>
@@ -91,17 +125,9 @@
 
 - (CGFloat)pullDownMenu:(DKPullDownBaseMenu *)pullDownMenu heightForColAtIndex:(NSInteger)index
 {
-    // 第1列 高度
     if (index == 0) {
         return 400;
     }
-    
-    // 第2列 高度
-    if (index == 1) {
-        return 176;
-    }
-    
-    // 第3列 高度
     return 240;
 }
 

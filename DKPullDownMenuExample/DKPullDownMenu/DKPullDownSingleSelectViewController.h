@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-UIKIT_EXTERN NSString *const DKPullDownMenuTitleDidUpdatedNotification;
-
 @interface DKPullDownSingleSelectViewController : UITableViewController
 
 @end

@@ -24,6 +24,10 @@
     DKPullDownMenu *menu = [[DKPullDownMenu alloc] init];
     menu.frame = CGRectMake(0, 20, self.view.frame.size.width, 44);
     [self.view addSubview:menu];
+    
+    DKPullDownMenuItem *item1 = [DKPullDownMenuItem itemWithType:DKPullDownMenuItemTypeSingle title:@"单选" subTitles:@[@"单选A",@"单选B"]];
+    DKPullDownMenuItem *item2 = [DKPullDownMenuItem itemWithType:DKPullDownMenuItemTypeMulti title:@"多选" subTitles:@[@"多选A",@"多选B",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C"]];
+    menu.pullDownMenuItems = @[item1,item2];
 }
 
 
