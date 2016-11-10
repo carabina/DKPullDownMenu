@@ -125,10 +125,7 @@
 
 - (CGFloat)pullDownMenu:(DKPullDownBaseMenu *)pullDownMenu heightForColAtIndex:(NSInteger)index
 {
-    if (index == 0) {
-        return 400;
-    }
-    return 240;
+    return DKPullDownMenuShareManager.pullDownMenuItems[index].optionMenuHeight;
 }
 
 

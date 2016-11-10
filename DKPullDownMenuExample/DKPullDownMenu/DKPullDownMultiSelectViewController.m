@@ -14,6 +14,8 @@
 
 @interface DKPullDownMultiSelectViewController () <UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, weak) UITableView *tableView;
+@property (nonatomic, weak) UIButton *confrimBtn;
+/** 所有子标题 */
 @property (nonatomic, strong) NSArray<DKPullDownSubTitle *> *subTitles;
 /** 记录已选择的子标题 */
 @property (nonatomic, strong) NSMutableArray<DKPullDownSubTitle *> *selectSubTitles;
@@ -44,18 +46,32 @@ static NSString *const kPullDownMultiSubTitleTotal = @"全部";
 {
     [super viewDidLoad];
     
-    [self setupTableView];
-    
     [self setupConfirmBtn];
     
+    [self setupTableView];
+    
     [self setupTitles];
+    
+    // 观察者
+    [self.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    NSLog(@"%@",change[@"new"]);
+    
+    [self.tableView removeFromSuperview];
+    [self.confrimBtn removeFromSuperview];
+
+    [self setupTableView];
+    [self setupConfirmBtn];
 }
 
 - (void)setupTableView
 {
     UITableView *tableView = [[UITableView alloc] init];
     CGSize viewSize = self.view.frame.size;
-    tableView.frame = CGRectMake(0, 0, viewSize.width, 180);
+    tableView.frame = CGRectMake(0, 0, viewSize.width, self.view.frame.size.height - 40 - 10 * 2);
     tableView.delegate = self;
     tableView.dataSource = self;
     self.tableView = tableView;
@@ -69,13 +85,14 @@ static NSString *const kPullDownMultiSubTitleTotal = @"全部";
     CGFloat margin = 10;
     CGFloat x = margin;
     CGFloat h = 40;
-    CGFloat y = 240 - margin - h;
+    CGFloat y = self.view.frame.size.height - margin - h;
     CGFloat w = self.view.frame.size.width - margin * 2;
     confrimBtn.frame = CGRectMake(x, y, w, h);
     confrimBtn.backgroundColor = [UIColor blueColor];
     [confrimBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confrimBtn setTitle:@"确定" forState:UIControlStateNormal];
     [confrimBtn addTarget:self action:@selector(confirmBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    self.confrimBtn = confrimBtn;
     [self.view addSubview:confrimBtn];
 }
 
