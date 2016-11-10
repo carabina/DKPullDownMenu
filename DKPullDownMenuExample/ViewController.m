@@ -26,7 +26,7 @@
     [self.view addSubview:menu];
     
     DKPullDownMenuItem *item1 = [DKPullDownMenuItem itemWithType:DKPullDownMenuItemTypeSingle title:@"单选" subTitles:@[@"单选A",@"单选B"]];
-    DKPullDownMenuItem *item2 = [DKPullDownMenuItem itemWithType:DKPullDownMenuItemTypeMulti title:@"多选" subTitles:@[@"多选A",@"多选B",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C",@"多选C"]];
+    DKPullDownMenuItem *item2 = [DKPullDownMenuItem itemWithType:DKPullDownMenuItemTypeMulti title:@"多选" subTitles:@[@"多选A",@"多选B",@"多选C",@"多选D",@"多选E",@"多选F",@"多选G",@"多选H",@"多选I",@"多选J",@"多选K",@"多选L",@"多选M",@"多选N"]];
     menu.pullDownMenuItems = @[item1,item2];
 }
 

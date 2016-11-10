@@ -12,7 +12,7 @@
 #import <objc/runtime.h>
 
 @interface DKPullDownSingleSelectViewController ()
-@property (nonatomic, copy) NSArray *titles;
+@property (nonatomic, copy) NSArray<NSString *> *titles;
 @property (nonatomic, assign) NSInteger selectedCol;
 @end
 

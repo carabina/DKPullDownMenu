@@ -23,6 +23,7 @@
 		D7B9FD281DD442BF00356F4A /* DKPullDownMultiSelectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD271DD442BF00356F4A /* DKPullDownMultiSelectCell.m */; };
 		D7B9FD2B1DD44FEA00356F4A /* DKPullDownMenuManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD2A1DD44FEA00356F4A /* DKPullDownMenuManager.m */; };
 		D7B9FD2E1DD461EF00356F4A /* DKPullDownMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD2D1DD461EF00356F4A /* DKPullDownMenuItem.m */; };
+		D7B9FD311DD49BF300356F4A /* DKPullDownSubTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD301DD49BF300356F4A /* DKPullDownSubTitle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,8 @@
 		D7B9FD2A1DD44FEA00356F4A /* DKPullDownMenuManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKPullDownMenuManager.m; sourceTree = "<group>"; };
 		D7B9FD2C1DD461EF00356F4A /* DKPullDownMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKPullDownMenuItem.h; sourceTree = "<group>"; };
 		D7B9FD2D1DD461EF00356F4A /* DKPullDownMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKPullDownMenuItem.m; sourceTree = "<group>"; };
+		D7B9FD2F1DD49BF300356F4A /* DKPullDownSubTitle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKPullDownSubTitle.h; sourceTree = "<group>"; };
+		D7B9FD301DD49BF300356F4A /* DKPullDownSubTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKPullDownSubTitle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +134,8 @@
 				D7B9FD241DD4422400356F4A /* DKPullDownMultiSelectViewController.m */,
 				D7B9FD261DD442BF00356F4A /* DKPullDownMultiSelectCell.h */,
 				D7B9FD271DD442BF00356F4A /* DKPullDownMultiSelectCell.m */,
+				D7B9FD2F1DD49BF300356F4A /* DKPullDownSubTitle.h */,
+				D7B9FD301DD49BF300356F4A /* DKPullDownSubTitle.m */,
 				D7B9FD291DD44FEA00356F4A /* DKPullDownMenuManager.h */,
 				D7B9FD2A1DD44FEA00356F4A /* DKPullDownMenuManager.m */,
 			);
@@ -215,6 +220,7 @@
 				D7B9FD011DD417A200356F4A /* ViewController.m in Sources */,
 				D7B9FD2E1DD461EF00356F4A /* DKPullDownMenuItem.m in Sources */,
 				D7B9FD251DD4422400356F4A /* DKPullDownMultiSelectViewController.m in Sources */,
+				D7B9FD311DD49BF300356F4A /* DKPullDownSubTitle.m in Sources */,
 				D7B9FCFE1DD417A200356F4A /* AppDelegate.m in Sources */,
 				D7B9FD1F1DD4341800356F4A /* DKPullDownMenu.m in Sources */,
 				D7B9FD281DD442BF00356F4A /* DKPullDownMultiSelectCell.m in Sources */,
@@ -287,7 +293,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -329,7 +335,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -343,6 +349,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = G8M2K7562P;
 				INFOPLIST_FILE = DKPullDownMenuExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.dankal.DKPullDownMenuExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -355,6 +362,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = G8M2K7562P;
 				INFOPLIST_FILE = DKPullDownMenuExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = cn.dankal.DKPullDownMenuExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";

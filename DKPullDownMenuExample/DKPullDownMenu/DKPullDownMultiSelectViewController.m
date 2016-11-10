@@ -9,13 +9,14 @@
 #import "DKPullDownMultiSelectViewController.h"
 #import "DKPullDownMultiSelectCell.h"
 #import "DKPullDownMenuManager.h"
+#import "DKPullDownSubTitle.h"
 #import <objc/runtime.h>
 
 @interface DKPullDownMultiSelectViewController () <UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, weak) UITableView *tableView;
-@property (nonatomic, strong) NSArray *titles;
-// 记录已选中的cell
-@property (nonatomic, strong) NSMutableArray *selectCells;
+@property (nonatomic, strong) NSArray<DKPullDownSubTitle *> *subTitles;
+/** 记录已选择的子标题 */
+@property (nonatomic, strong) NSMutableArray<DKPullDownSubTitle *> *selectSubTitles;
 @end
 
 @implementation DKPullDownMultiSelectViewController
@@ -24,15 +25,17 @@
 UIKIT_EXTERN NSString *const DKPullDownMenuTitleDidUpdatedNotification;
 /** item关联控制器的标识 */
 UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
+/** 第一个子标题 */
+static NSString *const kPullDownMultiSubTitleTotal = @"全部";
 
 #pragma mark - Getter && Setter
 
-- (NSMutableArray *)selectCells
+- (NSMutableArray<DKPullDownSubTitle *> *)selectSubTitles
 {
-    if (_selectCells == nil) {
-        _selectCells = [NSMutableArray array];
+    if (!_selectSubTitles) {
+        _selectSubTitles = [NSMutableArray array];
     }
-    return _selectCells;
+    return _selectSubTitles;
 }
 
 #pragma mark - Life Cycle
@@ -78,17 +81,26 @@ UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
 
 - (void)setupTitles
 {
+    __weak typeof(self) weakSelf = self;
     [DKPullDownMenuShareManager.pullDownMenuItems enumerateObjectsUsingBlock:^(DKPullDownMenuItem * _Nonnull item, NSUInteger idx, BOOL * _Nonnull stop) {
         id vc = objc_getAssociatedObject(item, &DKPullDownMenuItemAssociateVcIdentifier);
         if (self == vc) {
+            NSMutableArray<NSString *> *tempTitles = [NSMutableArray array];
             if (item.subTitles.count > 1) { // 有1个以上就加上"全部"
-                NSMutableArray *tempTitles = [NSMutableArray array];
-                [tempTitles addObject:@"全部"];
+                [tempTitles addObject:kPullDownMultiSubTitleTotal];
                 [tempTitles addObjectsFromArray:item.subTitles];
-                _titles = [tempTitles copy];
             } else if (item.subTitles.count) {
-                _titles = item.subTitles;
+                tempTitles = [item.subTitles copy];
             }
+            NSMutableArray<DKPullDownSubTitle *> *subTitles = [NSMutableArray array];
+            [tempTitles enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                DKPullDownSubTitle *subTitle = [[DKPullDownSubTitle alloc] init];
+                subTitle.Id = [NSString stringWithFormat:@"%ld",(long)idx];
+                subTitle.title = obj;
+                [subTitles addObject:subTitle];
+            }];
+            weakSelf.subTitles = [subTitles copy];
+            [weakSelf.tableView reloadData];
             *stop = YES;
         }
     }];
@@ -99,36 +111,27 @@ UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
 /** 点击确定 */
 - (void)confirmBtnClick
 {
-    NSArray *titles = [self.selectCells valueForKeyPath:@"textLabel.text"];
+    [self.selectSubTitles sortUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
+        return [[obj1 Id] integerValue] > [[obj2 Id] integerValue];
+    }];
+    NSMutableArray *realSelectSubTitles = [NSMutableArray arrayWithArray:self.selectSubTitles];
+    if ([[self.selectSubTitles firstObject].title isEqualToString:kPullDownMultiSubTitleTotal]) {
+        [realSelectSubTitles removeObject:[realSelectSubTitles firstObject]];
+    }
+    NSArray *titles = [realSelectSubTitles valueForKeyPath:@"title"];
     // 更新菜单标题
     [[NSNotificationCenter defaultCenter] postNotificationName:DKPullDownMenuTitleDidUpdatedNotification object:self userInfo:@{@"arr":titles}];
 }
 
 #pragma mark - Private Method
 
-/** 选中"全部"cell */
-- (void)selectTotalCell
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-    DKPullDownMultiSelectCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.isSelected = YES;
-}
-
-/** 取消选中"全部"cell */
-- (void)unSelectTotalCell
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
-    DKPullDownMultiSelectCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    cell.isSelected = NO;
-}
-
 /** 取消选中所有的cell */
 - (void)unSelectAllCell
 {
-    // 取消之前所有选中cell
-    [self.selectCells removeAllObjects];
+    // 取消之前所有选中标题
+    [self.selectSubTitles removeAllObjects];
     
-    NSInteger count = _titles.count;
+    NSInteger count = _subTitles.count;
     for (int i = 0; i < count; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
         DKPullDownMultiSelectCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
@@ -140,16 +143,17 @@ UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
 - (void)selectAllCell
 {
     // 取消之前所有选中cell
-    [self.selectCells removeAllObjects];
+     [self.selectSubTitles removeAllObjects];
     
-    NSInteger count = _titles.count;
+    NSInteger count = _subTitles.count;
     for (int i = 0; i < count; i++) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:0];
         DKPullDownMultiSelectCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-        cell.isSelected = YES;
-        if (i > 0) {
-            [self.selectCells addObject:cell];
+        DKPullDownSubTitle *subTitle = [self.subTitles objectAtIndex:i];
+        if (cell) {
+            cell.isSelected = YES;
         }
+        [self.selectSubTitles addObject:subTitle];
     }
 }
 
@@ -157,13 +161,16 @@ UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _titles.count;
+    return _subTitles.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DKPullDownMultiSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([DKPullDownMultiSelectCell class])];
-    cell.textLabel.text = _titles[indexPath.row];
+    cell.textLabel.text = _subTitles[indexPath.row].title;
+    DKPullDownSubTitle *subTitle = [self.subTitles objectAtIndex:indexPath.row];
+    // 设置cell的选中状态
+    cell.isSelected = [self.selectSubTitles containsObject:subTitle];
     
     return cell;
 }
@@ -186,21 +193,35 @@ UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
         return;
     }
     
-    // 记录选中的cell
-    if (cell.isSelected) {
-        [self.selectCells addObject:cell];
-    } else {
-        [self.selectCells removeObject:cell];
+    // 点击了其它，取出对应的子标题
+    DKPullDownSubTitle *subTitle = [self.subTitles objectAtIndex:indexPath.row];
+    
+    if (cell.isSelected) { // 选中状态
+        if (![self.selectSubTitles containsObject:subTitle]) { // 数组中不存在
+            [self.selectSubTitles addObject:subTitle];
+        }
+    } else { // 取消选中
+        if ([self.selectSubTitles containsObject:subTitle]) { // 数组中已存在
+            [self.selectSubTitles removeObject:subTitle];
+        }
     }
     
-    // 判断是否选择了所有的cell
-    if (self.selectCells.count == _titles.count - 1) {
-        // 选中"全部"cell"
-        [self selectTotalCell];
-    } else {
-        // 取消选中"全部"cell
-        [self unSelectTotalCell];
+    // 更新"全部"的选中状态
+    DKPullDownSubTitle *firstSubTitle = [self.subTitles firstObject];
+    if (![firstSubTitle.title isEqualToString:kPullDownMultiSubTitleTotal]) return;
+    // 获取"全部"的cell
+    DKPullDownMultiSelectCell *firstCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    firstCell.isSelected = self.selectSubTitles.count == _subTitles.count;
+    if (firstCell.isSelected) { // 选中"全部"
+        if (![self.selectSubTitles containsObject:firstSubTitle]) {
+            [self.selectSubTitles addObject:firstSubTitle];
+        }
+    } else { // 取消选中"全部"
+        if ([self.selectSubTitles containsObject:firstSubTitle]) {
+            [self.selectSubTitles removeObject:firstSubTitle];
+        }
     }
+    
 }
 
 @end
