@@ -14,7 +14,12 @@
 
 - (CGFloat)optionMenuHeight
 {
-    return _optionRowHeight ? _optionRowHeight : 300;
+    return _optionMenuHeight ? _optionMenuHeight : 300;
+}
+
+- (CGFloat)optionRowHeight
+{
+    return _optionRowHeight ? _optionRowHeight : 44;
 }
 
 #pragma mark - Life Cycle

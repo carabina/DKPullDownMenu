@@ -23,10 +23,6 @@
 
 @implementation DKPullDownMultiSelectViewController
 
-/** 更新下拉菜单标题的通知 */
-UIKIT_EXTERN NSString *const DKPullDownMenuTitleDidUpdatedNotification;
-/** item关联控制器的标识 */
-UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
 /** 第一个子标题 */
 static NSString *const kPullDownMultiSubTitleTotal = @"全部";
 
@@ -131,7 +127,11 @@ static NSString *const kPullDownMultiSubTitleTotal = @"全部";
                 subTitle.title = obj;
                 [subTitles addObject:subTitle];
             }];
+            // 子标题
             weakSelf.subTitles = [subTitles copy];
+            // 行高
+            weakSelf.tableView.rowHeight = item.optionRowHeight;
+            
             [weakSelf.tableView reloadData];
             *stop = YES;
         }

@@ -32,6 +32,7 @@
 
 NSString *const DKPullDownMenuTitleDidUpdatedNotification = @"DKPullDownMenuTitleDidUpdatedNotification";
 NSString *const DKPullDownMenuItemAssociateVcIdentifier = @"DKPullDownMenuItemAssociateVcIdentifier";
+NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAssociateOpRowHIdentifier";
 
 #pragma mark - Getter && Setter
 
@@ -102,7 +103,8 @@ NSString *const DKPullDownMenuItemAssociateVcIdentifier = @"DKPullDownMenuItemAs
 
 #pragma mark - Life Cycle
 
-- (instancetype)initWithFrame:(CGRect)frame{
+- (instancetype)initWithFrame:(CGRect)frame
+{
     if (self = [super initWithFrame:frame]) {
         [self setupBase];
     }
@@ -303,6 +305,5 @@ NSString *const DKPullDownMenuItemAssociateVcIdentifier = @"DKPullDownMenuItemAs
         self.coverView.backgroundColor = _coverColor;
     }];
 }
-
 
 @end

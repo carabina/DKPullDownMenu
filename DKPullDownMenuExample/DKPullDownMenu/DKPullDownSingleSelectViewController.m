@@ -18,11 +18,6 @@
 
 @implementation DKPullDownSingleSelectViewController
 
-/** 更新下拉菜单标题的通知 */
-UIKIT_EXTERN NSString *const DKPullDownMenuTitleDidUpdatedNotification;
-/** item关联控制器的标识 */
-UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
-
 #pragma mark - Life Cycle
 
 - (void)viewDidLoad
@@ -56,14 +51,21 @@ UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
 {
     self.tableView.tableFooterView = [[UIView alloc] init];
     [self.tableView registerClass:[DKPullDownSingleSelectCell class] forCellReuseIdentifier:NSStringFromClass([DKPullDownSingleSelectCell class])];
+    
 }
 
 - (void)setupTitles
 {
+    __weak typeof(self) weakSelf = self;
     [DKPullDownMenuShareManager.pullDownMenuItems enumerateObjectsUsingBlock:^(DKPullDownMenuItem * _Nonnull item, NSUInteger idx, BOOL * _Nonnull stop) {
         id vc = objc_getAssociatedObject(item, &DKPullDownMenuItemAssociateVcIdentifier);
         if (self == vc) {
-            _titles = item.subTitles;
+            // 子标题
+            weakSelf.titles = item.subTitles;
+            // 行高
+            weakSelf.tableView.rowHeight = item.optionRowHeight;
+            
+            [weakSelf.tableView reloadData];
             *stop = YES;
         }
     }];

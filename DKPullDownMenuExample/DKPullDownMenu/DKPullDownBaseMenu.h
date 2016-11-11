@@ -8,11 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-/** 更新下拉菜单标题的通知 */
-UIKIT_EXTERN NSString *const DKPullDownMenuTitleDidUpdatedNotification;
-/** item关联控制器的标识 */
-UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
-
 @class DKPullDownBaseMenu;
 
 /**
