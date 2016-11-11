@@ -79,15 +79,14 @@
         // 标题
         [titles addObject:item.title];
         id vc;
-        switch (item.type) {
-            case DKPullDownMenuItemTypeSingle:
-                vc = [[DKPullDownSingleSelectViewController alloc] init];
-                break;
-            case DKPullDownMenuItemTypeMulti:
-                vc = [[DKPullDownMultiSelectViewController alloc] init];
-                break;
-            case DKPullDownMenuItemTypeCustom:
-                vc = item.customViewController;
+        if ([item isKindOfClass:[DKPullDownMenuSingleSelectItem class]]) {
+            vc = [[DKPullDownSingleSelectViewController alloc] init];
+        } else if ([item isKindOfClass:[DKPullDownMenuMultiSelectItem class]]) {
+            vc = [[DKPullDownMultiSelectViewController alloc] init];
+        } else if ([item isKindOfClass:[DKPullDownMenuCustomItem class]]) {
+            vc = ((DKPullDownMenuCustomItem *)item).customViewController;
+        } else { // 父类, 默认为单选
+            vc = [[DKPullDownSingleSelectViewController alloc] init];
         }
         // item关联控制器
         objc_setAssociatedObject(item, &DKPullDownMenuItemAssociateVcIdentifier, vc, OBJC_ASSOCIATION_RETAIN_NONATOMIC);

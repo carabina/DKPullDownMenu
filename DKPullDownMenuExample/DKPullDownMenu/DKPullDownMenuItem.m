@@ -24,27 +24,40 @@
 
 #pragma mark - Life Cycle
 
-+ (instancetype)itemWithType:(DKPullDownMenuItemType)type title:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles
++ (instancetype)itemWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles
 {
-    return [[self alloc] initWithType:type title:title subTitles:subTitles];
+    return [[self alloc] initWithTitle:title subTitles:subTitles];
 }
 
-+ (instancetype)itemWithType:(DKPullDownMenuItemType)type title:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController
+- (instancetype)initWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles
 {
-    return [[self alloc] initWithType:type title:title subTitles:subTitles customViewController:customViewController];
-}
-
-- (instancetype)initWithType:(DKPullDownMenuItemType)type title:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles
-{
-    _type = type;
-    _title = title;
+    NSAssert(subTitles.count, @"DKPullDownMenuItem subTitles cannot be nil");
+    _title = title ? title : @"";
     _subTitles = subTitles;
     return self;
 }
 
-- (instancetype)initWithType:(DKPullDownMenuItemType)type title:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController
+@end
+
+@implementation DKPullDownMenuSingleSelectItem
+
+@end
+
+@implementation DKPullDownMenuMultiSelectItem
+
+@end
+
+@implementation DKPullDownMenuCustomItem
+
++ (instancetype)itemWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController
 {
-    self = [self initWithType:type title:title subTitles:subTitles];
+    return [[super alloc] initWithTitle:title subTitles:subTitles customViewController:customViewController];
+}
+
+- (instancetype)initWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController
+{
+    NSAssert(customViewController, @"DKPullDownMenuCustomItem customViewController cannot be nil");
+    self = [super initWithTitle:title subTitles:subTitles];
     _customViewController = customViewController;
     return self;
 }

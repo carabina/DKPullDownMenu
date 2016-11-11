@@ -8,16 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef NS_ENUM(NSInteger,DKPullDownMenuItemType) {
-    DKPullDownMenuItemTypeSingle,   // 单选
-    DKPullDownMenuItemTypeMulti,    // 多选
-    DKPullDownMenuItemTypeCustom    // 自定义
-};
-
 @interface DKPullDownMenuItem : NSObject
 
-/** 类型 */
-@property (nonatomic, assign) DKPullDownMenuItemType type;
 /** 选项默认标题 */
 @property (nonatomic, copy) NSString *title;
 /** 子选项标题数组 */
@@ -26,13 +18,43 @@ typedef NS_ENUM(NSInteger,DKPullDownMenuItemType) {
 @property (nonatomic, assign) CGFloat optionMenuHeight;
 /** 选项菜单的每一行高度 */
 @property (nonatomic, assign) CGFloat optionRowHeight;
+/** 主标题按钮默认状态图片 */
+@property (nonatomic, weak) UIImage *normalImage;
+/** 主标题按钮选中状态图片 */
+@property (nonatomic, weak) UIImage *selectImage;
+/** 主标题字体 */
+@property (nonatomic, weak) UIFont *titleFont;
+/** 子标题字体 */
+@property (nonatomic, weak) UIFont *subTitleFont;
+/** 主标题默认状态字体颜色 */
+@property (nonatomic, weak) UIColor *titleNormalColor;
+/** 主标题选中状态字体颜色 */
+@property (nonatomic, weak) UIColor *titleSelectColor;
+/** 子标题默认状态字体颜色 */
+@property (nonatomic, weak) UIColor *subTitleNormalColor;
+/** 子标题选中状态字体颜色 */
+@property (nonatomic, weak) UIColor *subTitleSelectColor;
+
++ (instancetype)itemWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles;
+- (instancetype)initWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles;
+@end
+
+@interface DKPullDownMenuSingleSelectItem : DKPullDownMenuItem
+/** 选中图片 */
+@property (nonatomic, weak) UIImage *singleSelectImage;
+@end
+
+@interface DKPullDownMenuMultiSelectItem : DKPullDownMenuItem
+/** 普通状态图片 */
+@property (nonatomic, weak) UIImage *multiNormalImage;
+/** 选中状态图片 */
+@property (nonatomic, weak) UIImage *multiSelectImage;
+@end
+
+@interface DKPullDownMenuCustomItem : DKPullDownMenuItem
 /** 自定义的控制器 */
 @property (nonatomic, strong) UIViewController *customViewController;
 
-+ (instancetype)itemWithType:(DKPullDownMenuItemType)type title:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles;
-+ (instancetype)itemWithType:(DKPullDownMenuItemType)type title:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController;
-
-- (instancetype)initWithType:(DKPullDownMenuItemType)type title:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles;
-- (instancetype)initWithType:(DKPullDownMenuItemType)type title:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController;
-
++ (instancetype)itemWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController;
+- (instancetype)initWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController;
 @end
