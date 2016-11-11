@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D72CAE131DD570FA00D0F08E /* DKCustomDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D72CAE111DD570FA00D0F08E /* DKCustomDemoViewController.m */; };
+		D72CAE141DD570FA00D0F08E /* DKCustomDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D72CAE121DD570FA00D0F08E /* DKCustomDemoViewController.xib */; };
 		D7B9FCFB1DD417A200356F4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FCFA1DD417A200356F4A /* main.m */; };
 		D7B9FCFE1DD417A200356F4A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FCFD1DD417A200356F4A /* AppDelegate.m */; };
-		D7B9FD011DD417A200356F4A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD001DD417A200356F4A /* ViewController.m */; };
+		D7B9FD011DD417A200356F4A /* DKPullDownMenuExampleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FD001DD417A200356F4A /* DKPullDownMenuExampleViewController.m */; };
 		D7B9FD041DD417A200356F4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7B9FD021DD417A200356F4A /* Main.storyboard */; };
 		D7B9FD061DD417A200356F4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7B9FD051DD417A200356F4A /* Assets.xcassets */; };
 		D7B9FD091DD417A200356F4A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7B9FD071DD417A200356F4A /* LaunchScreen.storyboard */; };
@@ -27,12 +29,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D72CAE101DD570FA00D0F08E /* DKCustomDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKCustomDemoViewController.h; sourceTree = "<group>"; };
+		D72CAE111DD570FA00D0F08E /* DKCustomDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKCustomDemoViewController.m; sourceTree = "<group>"; };
+		D72CAE121DD570FA00D0F08E /* DKCustomDemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DKCustomDemoViewController.xib; sourceTree = "<group>"; };
 		D7B9FCF61DD417A200356F4A /* DKPullDownMenuExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DKPullDownMenuExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B9FCFA1DD417A200356F4A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D7B9FCFC1DD417A200356F4A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D7B9FCFD1DD417A200356F4A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		D7B9FCFF1DD417A200356F4A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		D7B9FD001DD417A200356F4A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		D7B9FCFF1DD417A200356F4A /* DKPullDownMenuExampleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DKPullDownMenuExampleViewController.h; sourceTree = "<group>"; };
+		D7B9FD001DD417A200356F4A /* DKPullDownMenuExampleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DKPullDownMenuExampleViewController.m; sourceTree = "<group>"; };
 		D7B9FD031DD417A200356F4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D7B9FD051DD417A200356F4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D7B9FD081DD417A200356F4A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -94,8 +99,11 @@
 				D7B9FD101DD417D700356F4A /* DKPullDownMenu */,
 				D7B9FCFC1DD417A200356F4A /* AppDelegate.h */,
 				D7B9FCFD1DD417A200356F4A /* AppDelegate.m */,
-				D7B9FCFF1DD417A200356F4A /* ViewController.h */,
-				D7B9FD001DD417A200356F4A /* ViewController.m */,
+				D7B9FCFF1DD417A200356F4A /* DKPullDownMenuExampleViewController.h */,
+				D7B9FD001DD417A200356F4A /* DKPullDownMenuExampleViewController.m */,
+				D72CAE101DD570FA00D0F08E /* DKCustomDemoViewController.h */,
+				D72CAE111DD570FA00D0F08E /* DKCustomDemoViewController.m */,
+				D72CAE121DD570FA00D0F08E /* DKCustomDemoViewController.xib */,
 				D7B9FD021DD417A200356F4A /* Main.storyboard */,
 				D7B9FD051DD417A200356F4A /* Assets.xcassets */,
 				D7B9FD071DD417A200356F4A /* LaunchScreen.storyboard */,
@@ -202,6 +210,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7B9FD091DD417A200356F4A /* LaunchScreen.storyboard in Resources */,
+				D72CAE141DD570FA00D0F08E /* DKCustomDemoViewController.xib in Resources */,
 				D7B9FD061DD417A200356F4A /* Assets.xcassets in Resources */,
 				D7B9FD041DD417A200356F4A /* Main.storyboard in Resources */,
 			);
@@ -217,7 +226,7 @@
 				D7B9FD191DD4265300356F4A /* DKPullDownSingleSelectViewController.m in Sources */,
 				D7B9FD221DD4367300356F4A /* DKPullDownTitleButton.m in Sources */,
 				D7B9FD161DD41B1700356F4A /* DKPullDownCover.m in Sources */,
-				D7B9FD011DD417A200356F4A /* ViewController.m in Sources */,
+				D7B9FD011DD417A200356F4A /* DKPullDownMenuExampleViewController.m in Sources */,
 				D7B9FD2E1DD461EF00356F4A /* DKPullDownMenuItem.m in Sources */,
 				D7B9FD251DD4422400356F4A /* DKPullDownMultiSelectViewController.m in Sources */,
 				D7B9FD311DD49BF300356F4A /* DKPullDownSubTitle.m in Sources */,
@@ -225,6 +234,7 @@
 				D7B9FD1F1DD4341800356F4A /* DKPullDownMenu.m in Sources */,
 				D7B9FD281DD442BF00356F4A /* DKPullDownMultiSelectCell.m in Sources */,
 				D7B9FD1C1DD426AC00356F4A /* DKPullDownSingleSelectCell.m in Sources */,
+				D72CAE131DD570FA00D0F08E /* DKCustomDemoViewController.m in Sources */,
 				D7B9FCFB1DD417A200356F4A /* main.m in Sources */,
 				D7B9FD2B1DD44FEA00356F4A /* DKPullDownMenuManager.m in Sources */,
 				D7B9FD131DD418B700356F4A /* DKPullDownBaseMenu.m in Sources */,

@@ -55,6 +55,9 @@
 /** 自定义的控制器 */
 @property (nonatomic, strong) UIViewController *customViewController;
 
-+ (instancetype)itemWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController;
-- (instancetype)initWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController;
++ (instancetype)itemWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles UNAVAILABLE_ATTRIBUTE;
+
++ (instancetype)itemWithTitle:(NSString *)title customViewController:(UIViewController *)customViewController;
+- (instancetype)initWithTitle:(NSString *)title customViewController:(UIViewController *)customViewController;
 @end

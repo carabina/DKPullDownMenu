@@ -32,8 +32,8 @@
 - (instancetype)initWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles
 {
     NSAssert(subTitles.count, @"DKPullDownMenuItem subTitles cannot be nil");
-    _title = title ? title : @"";
-    _subTitles = subTitles;
+    self.title = title ? title : @"";
+    self.subTitles = subTitles;
     return self;
 }
 
@@ -49,16 +49,26 @@
 
 @implementation DKPullDownMenuCustomItem
 
-+ (instancetype)itemWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController
++ (instancetype)itemWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles
 {
-    return [[super alloc] initWithTitle:title subTitles:subTitles customViewController:customViewController];
+    return [super itemWithTitle:title subTitles:subTitles];
 }
 
-- (instancetype)initWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles customViewController:(UIViewController *)customViewController
+- (instancetype)initWithTitle:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles
+{
+    return [super initWithTitle:title subTitles:subTitles];
+}
+
++ (instancetype)itemWithTitle:(NSString *)title customViewController:(UIViewController *)customViewController
+{
+    return [[self alloc] initWithTitle:title customViewController:customViewController];
+}
+
+- (instancetype)initWithTitle:(NSString *)title customViewController:(UIViewController *)customViewController
 {
     NSAssert(customViewController, @"DKPullDownMenuCustomItem customViewController cannot be nil");
-    self = [super initWithTitle:title subTitles:subTitles];
-    _customViewController = customViewController;
+    self.title = title;
+    self.customViewController = customViewController;
     return self;
 }
 
