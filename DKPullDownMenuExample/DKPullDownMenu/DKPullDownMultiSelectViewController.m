@@ -50,28 +50,37 @@ static NSString *const kPullDownMultiSubTitleTotal = @"全部";
     
     [self setupTableView];
     
+    [self layoutSubviews];
+    
     [self setupTitles];
     
     // 观察者
     [self.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
 }
 
+- (void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+- (void)dealloc
+{
+    [self.view removeObserver:self forKeyPath:@"frame"];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
-    NSLog(@"%@",change[@"new"]);
-    
-    [self.tableView removeFromSuperview];
-    [self.confrimBtn removeFromSuperview];
-
-    [self setupTableView];
-    [self setupConfirmBtn];
+    [self layoutSubviews];
 }
 
 - (void)setupTableView
 {
     UITableView *tableView = [[UITableView alloc] init];
-    CGSize viewSize = self.view.frame.size;
-    tableView.frame = CGRectMake(0, 0, viewSize.width, self.view.frame.size.height - 40 - 10 * 2);
     tableView.delegate = self;
     tableView.dataSource = self;
     self.tableView = tableView;
@@ -82,18 +91,24 @@ static NSString *const kPullDownMultiSubTitleTotal = @"全部";
 - (void)setupConfirmBtn
 {
     UIButton *confrimBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    CGFloat margin = 10;
-    CGFloat x = margin;
-    CGFloat h = 40;
-    CGFloat y = self.view.frame.size.height - margin - h;
-    CGFloat w = self.view.frame.size.width - margin * 2;
-    confrimBtn.frame = CGRectMake(x, y, w, h);
     confrimBtn.backgroundColor = [UIColor blueColor];
     [confrimBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confrimBtn setTitle:@"确定" forState:UIControlStateNormal];
     [confrimBtn addTarget:self action:@selector(confirmBtnClick) forControlEvents:UIControlEventTouchUpInside];
     self.confrimBtn = confrimBtn;
     [self.view addSubview:confrimBtn];
+}
+
+- (void)layoutSubviews
+{
+    CGSize viewSize = self.view.frame.size;
+    CGFloat margin = 10;
+    CGFloat confrimBtnX = margin;
+    CGFloat confrimBtnH = 40;
+    CGFloat confrimBtnY = viewSize.height - margin - confrimBtnH;
+    CGFloat confrimBtnW = viewSize.width - margin * 2;
+    self.confrimBtn.frame = CGRectMake(confrimBtnX, confrimBtnY, confrimBtnW, confrimBtnH);
+    self.tableView.frame = CGRectMake(0, 0, viewSize.width, viewSize.height - confrimBtnH - margin * 2);
 }
 
 - (void)setupTitles
@@ -194,12 +209,23 @@ static NSString *const kPullDownMultiSubTitleTotal = @"全部";
 
 #pragma mark - <UITableViewDelegate>
 
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     DKPullDownMultiSelectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.isSelected = !cell.isSelected;
     
-    if (indexPath.row == 0) { // 点击了全部
+    if (indexPath.row == 0) {
+        // 点击了全部
         if (cell.isSelected == YES) {
             // 选中所有的cell
             [self selectAllCell];
@@ -213,28 +239,27 @@ static NSString *const kPullDownMultiSubTitleTotal = @"全部";
     // 点击了其它，取出对应的子标题
     DKPullDownSubTitle *subTitle = [self.subTitles objectAtIndex:indexPath.row];
     
+    // 获取第一个子标题
+    DKPullDownSubTitle *firstSubTitle = [self.subTitles firstObject];
+    // 获取第一个cell
+    DKPullDownMultiSelectCell *firstCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    
     if (cell.isSelected) { // 选中状态
         if (![self.selectSubTitles containsObject:subTitle]) { // 数组中不存在
             [self.selectSubTitles addObject:subTitle];
+            // 更新"全部"的选中状态
+            if (![firstSubTitle.title isEqualToString:kPullDownMultiSubTitleTotal]) return;
+            if (self.selectSubTitles.count == _subTitles.count - 1) { // 选满
+                firstCell.isSelected = YES; // "全部"选中
+                [self.selectSubTitles addObject:firstSubTitle];
+            }
         }
     } else { // 取消选中
         if ([self.selectSubTitles containsObject:subTitle]) { // 数组中已存在
             [self.selectSubTitles removeObject:subTitle];
-        }
-    }
-    
-    // 更新"全部"的选中状态
-    DKPullDownSubTitle *firstSubTitle = [self.subTitles firstObject];
-    if (![firstSubTitle.title isEqualToString:kPullDownMultiSubTitleTotal]) return;
-    // 获取"全部"的cell
-    DKPullDownMultiSelectCell *firstCell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-    firstCell.isSelected = self.selectSubTitles.count == _subTitles.count;
-    if (firstCell.isSelected) { // 选中"全部"
-        if (![self.selectSubTitles containsObject:firstSubTitle]) {
-            [self.selectSubTitles addObject:firstSubTitle];
-        }
-    } else { // 取消选中"全部"
-        if ([self.selectSubTitles containsObject:firstSubTitle]) {
+            // 更新"全部"的选中状态
+            if (![firstSubTitle.title isEqualToString:kPullDownMultiSubTitleTotal]) return;
+            firstCell.isSelected = NO; // "全部"取消选中
             [self.selectSubTitles removeObject:firstSubTitle];
         }
     }

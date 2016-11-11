@@ -29,9 +29,9 @@ UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
 {
     [super viewDidLoad];
     
-    [self setupTitles];
+    [self setupTableView];
     
-    [self.tableView registerClass:[DKPullDownSingleSelectCell class] forCellReuseIdentifier:NSStringFromClass([DKPullDownSingleSelectCell class])];
+    [self setupTitles];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -39,6 +39,23 @@ UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
     [super viewWillAppear:animated];
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_selectedCol inSection:0];
     [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+}
+
+/** 画完整分割线 */
+- (void)viewDidLayoutSubviews
+{
+    if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [self.tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)])  {
+        [self.tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
+- (void)setupTableView
+{
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    [self.tableView registerClass:[DKPullDownSingleSelectCell class] forCellReuseIdentifier:NSStringFromClass([DKPullDownSingleSelectCell class])];
 }
 
 - (void)setupTitles
@@ -71,6 +88,16 @@ UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
 }
 
 #pragma mark - <UITableViewDelegate>
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPat
+{
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

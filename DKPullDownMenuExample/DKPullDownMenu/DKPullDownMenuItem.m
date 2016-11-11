@@ -10,6 +10,15 @@
 
 @implementation DKPullDownMenuItem
 
+#pragma mark - Getter && Setter
+
+- (CGFloat)optionMenuHeight
+{
+    return _optionRowHeight ? _optionRowHeight : 300;
+}
+
+#pragma mark - Life Cycle
+
 + (instancetype)itemWithType:(DKPullDownMenuItemType)type title:(NSString *)title subTitles:(NSArray<NSString *> *)subTitles
 {
     return [[self alloc] initWithType:type title:title subTitles:subTitles];
