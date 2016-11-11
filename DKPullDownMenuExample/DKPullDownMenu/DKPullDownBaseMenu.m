@@ -8,12 +8,16 @@
 
 #import "DKPullDownBaseMenu.h"
 #import "DKPullDownCover.h"
+#import "DKPullDownMenuManager.h"
+
+#define KAddObserver(keyPath) [DKPullDownMenuShareManager addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:nil];
+#define KRemoveObserver(keyPath) [DKPullDownMenuShareManager removeObserver:self forKeyPath:keyPath];
 
 @interface DKPullDownBaseMenu ()
 /** 下拉菜单所有按钮 */
 @property (nonatomic, strong) NSMutableArray *menuButtons;
 /** 下拉菜单所有分割线 */
-@property (nonatomic, strong) NSMutableArray *separateLines;
+@property (nonatomic, strong) NSMutableArray<UIView *> *separateLines;
 /** 下拉菜单所有控制器 */
 @property (nonatomic, strong) NSMutableArray *controllers;
 /** 下拉菜单每列高度 */
@@ -34,9 +38,13 @@ NSString *const DKPullDownMenuTitleDidUpdatedNotification = @"DKPullDownMenuTitl
 NSString *const DKPullDownMenuItemAssociateVcIdentifier = @"DKPullDownMenuItemAssociateVcIdentifier";
 NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAssociateOpRowHIdentifier";
 
+static NSString *const kKeyPathSeparateLineColor = @"separateLineColor";
+static NSString *const kKeyPathSeparateLineTopMargin = @"separateLineTopMargin";
+static NSString *const kKeyPathCoverColor = @"coverColor";
+
 #pragma mark - Getter && Setter
 
-- (NSMutableArray *)separateLines
+- (NSMutableArray<UIView *> *)separateLines
 {
     if (!_separateLines) {
         _separateLines = [NSMutableArray array];
@@ -78,7 +86,7 @@ NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAs
         CGFloat coverW = self.frame.size.width;
         CGFloat coverH = pullDownMenu.superview.bounds.size.height - coverY;
         _coverView = [[DKPullDownCover alloc] initWithFrame:CGRectMake(coverX, coverY, coverW, coverH)];
-        _coverView.backgroundColor = _coverColor;
+        _coverView.backgroundColor = DKPullDownMenuShareManager.coverColor;
         [pullDownMenu.superview addSubview:_coverView];
         __weak typeof(self) weakSelf = self;
         // 蒙版点击block
@@ -114,16 +122,18 @@ NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAs
 - (void)dealloc
 {
     [self clear];
+    
     [[NSNotificationCenter defaultCenter] removeObserver:_observer];
+    
+    KRemoveObserver(kKeyPathSeparateLineColor)
+    KRemoveObserver(kKeyPathSeparateLineTopMargin)
+    KRemoveObserver(kKeyPathCoverColor)
 }
 
 - (void)setupBase
 {
     self.backgroundColor = [UIColor whiteColor];
-    _separateLineTopMargin = 10;
-    _separateLineColor =  [UIColor colorWithRed:221 / 255.0 green:221 / 255.0 blue:221 / 255.0 alpha:1];
-    _coverColor = [UIColor colorWithRed:221 / 255.0 green:221 / 255.0 blue:221 / 255.0 alpha:.7];
-    
+
     // 监听更新菜单标题通知
     _observer = [[NSNotificationCenter defaultCenter] addObserverForName:DKPullDownMenuTitleDidUpdatedNotification object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification * _Nonnull note) {
         // 获取列
@@ -139,6 +149,11 @@ NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAs
         // 设置按钮标题
         [btn setTitle:allValues.firstObject forState:UIControlStateNormal];
     }];
+    
+    // 添加观察者
+    KAddObserver(kKeyPathSeparateLineColor)
+    KAddObserver(kKeyPathSeparateLineTopMargin)
+    KAddObserver(kKeyPathCoverColor)
 }
 
 /** 布局子控件 */
@@ -159,7 +174,7 @@ NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAs
         // 设置分割线位置
         if (i < count - 1) {
             UIView *separateLine = self.separateLines[i];
-            separateLine.frame = CGRectMake(CGRectGetMaxX(btn.frame), _separateLineTopMargin, 1, btnH - 2 * _separateLineTopMargin);
+            separateLine.frame = CGRectMake(CGRectGetMaxX(btn.frame), DKPullDownMenuShareManager.separateLineTopMargin, 1, btnH - 2 * DKPullDownMenuShareManager.separateLineTopMargin);
         }
     }
     // 设置底部View位置
@@ -172,6 +187,24 @@ NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAs
 {
     [super willMoveToWindow:newWindow];
     [self reload];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:kKeyPathSeparateLineColor]) {
+        [self.separateLines enumerateObjectsUsingBlock:^(UIView * _Nonnull separateLine, NSUInteger idx, BOOL * _Nonnull stop) {
+            separateLine.backgroundColor = DKPullDownMenuShareManager.separateLineColor;
+        }];
+    } else if ([keyPath isEqualToString:kKeyPathSeparateLineTopMargin]) {
+        [self.separateLines enumerateObjectsUsingBlock:^(UIView * _Nonnull separateLine, NSUInteger idx, BOOL * _Nonnull stop) {
+            CGRect tempFrame = separateLine.frame;
+            tempFrame.origin.y = DKPullDownMenuShareManager.separateLineTopMargin;
+            tempFrame.size.height = self.bounds.size.height - 2 * DKPullDownMenuShareManager.separateLineTopMargin;
+            separateLine.frame = tempFrame;
+        }];
+    } else if ([keyPath isEqualToString:kKeyPathCoverColor]) {
+        _coverView.backgroundColor = DKPullDownMenuShareManager.coverColor;
+    }
 }
 
 #pragma mark - Events
@@ -272,14 +305,14 @@ NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAs
     NSInteger separateCount = cols - 1;
     for (NSInteger i = 0; i < separateCount; i++) {
         UIView *separateLine = [[UIView alloc] init];
-        separateLine.backgroundColor = _separateLineColor;
+        separateLine.backgroundColor = DKPullDownMenuShareManager.separateLineColor;
         [self addSubview:separateLine];
         [self.separateLines addObject:separateLine];
     }
     
     // 添加底部View
     UIView *bottomView = [[UIView alloc] init];
-    bottomView.backgroundColor = _separateLineColor;
+    bottomView.backgroundColor = DKPullDownMenuShareManager.separateLineColor;
     _bottomLine = bottomView;
     [self addSubview:bottomView];
     
@@ -302,7 +335,7 @@ NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAs
         self.contentView.frame = frame;
     } completion:^(BOOL finished) {
         self.coverView.hidden = YES;
-        self.coverView.backgroundColor = _coverColor;
+        self.coverView.backgroundColor = DKPullDownMenuShareManager.coverColor;
     }];
 }
 

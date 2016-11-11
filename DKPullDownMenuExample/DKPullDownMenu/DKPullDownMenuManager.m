@@ -19,6 +19,8 @@
 @implementation DKPullDownMenuManager
 static DKPullDownMenuManager *_instance;
 
+#pragma mark - Life Cycle
+
 + (id)allocWithZone:(struct _NSZone *)zone
 {
     static dispatch_once_t onceToken;
@@ -33,13 +35,28 @@ static DKPullDownMenuManager *_instance;
 {
     if (!_instance) {
         _instance = [[DKPullDownMenuManager alloc] init];
+        // Base
+        _instance.separateLineTopMargin = -1;
     }
     
     return _instance;
 }
 
+#pragma mark - Getter && Setter
 
+- (UIColor *)separateLineColor
+{
+    return _separateLineColor ? _separateLineColor : [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1];
+}
 
+- (NSInteger)separateLineTopMargin
+{
+    return _separateLineTopMargin >= 0 ? _separateLineTopMargin : 10;
+}
 
+- (UIColor *)coverColor
+{
+    return _coverColor ? _coverColor : [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:0.7];
+}
 
 @end

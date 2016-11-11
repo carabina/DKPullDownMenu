@@ -52,15 +52,8 @@
 
 /** 下拉菜单数据源 */
 @property (nonatomic, weak) id<DKPullDownMenuDataSource> dataSource;
-/** 分割线颜色 */
-@property (nonatomic, strong) UIColor *separateLineColor;
-/** 分割线距离顶部间距，默认10 */
-@property (nonatomic, assign) NSInteger separateLineTopMargin;
-/** 蒙版颜色 */
-@property (nonatomic, strong) UIColor *coverColor;
 
 /** 刷新下拉菜单 */
 - (void)reload;
-
 
 @end

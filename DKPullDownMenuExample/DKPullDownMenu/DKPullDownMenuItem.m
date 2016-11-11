@@ -12,14 +12,49 @@
 
 #pragma mark - Getter && Setter
 
-- (CGFloat)optionMenuHeight
-{
-    return _optionMenuHeight ? _optionMenuHeight : 300;
-}
-
 - (CGFloat)optionRowHeight
 {
     return _optionRowHeight ? _optionRowHeight : 44;
+}
+
+- (UIImage *)normalImage
+{
+    return _normalImage ? _normalImage : nil;
+}
+
+- (UIImage *)selectImage
+{
+    return _selectImage ? _selectImage : nil;
+}
+
+- (UIFont *)titleFont
+{
+    return _titleFont ? _titleFont : [UIFont systemFontOfSize:14.0];
+}
+
+- (UIFont *)subTitleFont
+{
+    return _subTitleFont ? _subTitleFont : [UIFont systemFontOfSize:14.0];
+}
+
+- (UIColor *)titleNormalColor
+{
+    return _titleNormalColor ? _titleNormalColor : [UIColor blackColor];
+}
+
+- (UIColor *)titleSelectColor
+{
+    return _titleSelectColor ? _titleSelectColor : [UIColor blackColor];
+}
+
+- (UIColor *)subTitleNormalColor
+{
+    return _subTitleNormalColor ? _subTitleNormalColor : [UIColor blackColor];
+}
+
+- (UIColor *)subTitleSelectColor
+{
+    return _subTitleSelectColor ? _subTitleSelectColor : [UIColor blackColor];
 }
 
 #pragma mark - Life Cycle

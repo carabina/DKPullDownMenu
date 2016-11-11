@@ -44,6 +44,24 @@
     }
 }
 
+- (void)setSeparateLineColor:(UIColor *)separateLineColor
+{
+    _separateLineColor = separateLineColor;
+    DKPullDownMenuShareManager.separateLineColor = separateLineColor;
+}
+
+- (void)setSeparateLineTopMargin:(NSInteger)separateLineTopMargin
+{
+    _separateLineTopMargin = separateLineTopMargin;
+    DKPullDownMenuShareManager.separateLineTopMargin = separateLineTopMargin;
+}
+
+- (void)setCoverColor:(UIColor *)coverColor
+{
+    _coverColor = coverColor;
+    DKPullDownMenuShareManager.coverColor = coverColor;
+}
+
 #pragma mark - Life Cycle
 
 - (void)awakeFromNib
@@ -107,10 +125,11 @@
 
 - (UIButton *)pullDownMenu:(DKPullDownBaseMenu *)pullDownMenu buttonForColAtIndex:(NSInteger)index
 {
+    DKPullDownMenuItem *item = DKPullDownMenuShareManager.pullDownMenuItems[index];
     DKPullDownTitleButton *button = [DKPullDownTitleButton buttonWithType:UIButtonTypeCustom];
     [button setTitle:_titles[index] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blueColor] forState:UIControlStateSelected];
+    [button setTitleColor:item.titleNormalColor forState:UIControlStateNormal];
+    [button setTitleColor:item.titleSelectColor forState:UIControlStateSelected];
     [button setImage:[UIImage imageNamed:@"titleBtn_down"] forState:UIControlStateNormal];
     [button setImage:[UIImage imageNamed:@"titleBtn_up"] forState:UIControlStateSelected];
     
@@ -124,7 +143,19 @@
 
 - (CGFloat)pullDownMenu:(DKPullDownBaseMenu *)pullDownMenu heightForColAtIndex:(NSInteger)index
 {
-    return DKPullDownMenuShareManager.pullDownMenuItems[index].optionMenuHeight;
+    DKPullDownMenuItem *item = DKPullDownMenuShareManager.pullDownMenuItems[index];
+    if (!item.optionMenuHeight) {
+        // 高度限制不能超出屏幕
+        CGFloat optionMenuMaxH = [UIScreen mainScreen].bounds.size.height - CGRectGetMaxY(self.menu.frame) - 20; // -20是状态栏高度
+        CGFloat optionMenuH = item.subTitles.count * item.optionRowHeight;
+        // 多选的时候算多个按钮的高度和两个间距
+        if ([item isKindOfClass:[DKPullDownMenuMultiSelectItem class]]) {
+            optionMenuH += 10 * 2 + 40;
+        }
+        return optionMenuH > optionMenuMaxH ? optionMenuMaxH : optionMenuH;
+    }
+    
+    return item.optionMenuHeight;
 }
 
 
