@@ -46,9 +46,20 @@
 
 @interface DKPullDownMenuMultiSelectItem : DKPullDownMenuItem
 /** 普通状态图片 */
-@property (nonatomic, weak) UIImage *multiNormalImage;
+@property (nonatomic, strong) UIImage *multiNormalImage;
 /** 选中状态图片 */
-@property (nonatomic, weak) UIImage *multiSelectImage;
+@property (nonatomic, strong) UIImage *multiSelectImage;
+/** 确定按钮的标题 */
+@property (nonatomic, strong) NSString *confirmTitle;
+/** 确定按钮的标题字体 */
+@property (nonatomic, strong) UIFont *confirmTitleFont;
+/** 确定按钮的标题颜色 */
+@property (nonatomic, strong) UIColor *confirmTitleColor;
+/** 确定按钮的颜色 */
+@property (nonatomic, strong) UIColor *confirmBackgroundColor;
+/** “全选”文字 */
+@property (nonatomic, strong) NSString *subTitleTotal;
+
 @end
 
 @interface DKPullDownMenuCustomItem : DKPullDownMenuItem

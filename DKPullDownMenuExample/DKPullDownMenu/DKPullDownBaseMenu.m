@@ -151,10 +151,11 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
         [self dismiss];
         // 获取所有值
         NSArray *allValues = note.userInfo.allValues;
-        // 不需要设置标题,字典个数大于1，或者有数组
-        if (allValues.count > 1 || [allValues.firstObject isKindOfClass:[NSArray class]]) return ;
-        // 设置按钮标题
-        [btn setTitle:allValues.firstObject forState:UIControlStateNormal];
+        // 单选的时候才设置标题
+        if (allValues.count == 1 && ![allValues.firstObject isKindOfClass:[NSArray class]]) {
+            // 设置按钮标题
+            [btn setTitle:allValues.firstObject forState:UIControlStateNormal];
+        }
         
         // 选中的数据
         NSLog(@"%@",note.userInfo);

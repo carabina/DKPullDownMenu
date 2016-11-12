@@ -20,25 +20,28 @@
 {
     [super viewDidLoad];
     
-//    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
-    
+    // 创建菜单
     DKPullDownMenu *menu = [[DKPullDownMenu alloc] init];
     menu.frame = CGRectMake(0, 20, self.view.frame.size.width, 44);
     [self.view addSubview:menu];
     
-    // 单选
+    // 构建选项 单选
     DKPullDownMenuSingleSelectItem *item1 = [DKPullDownMenuSingleSelectItem itemWithTitle:@"单选" subTitles:@[@"单选A",@"单选B"]];
 //    item1.optionMenuHeight = 200;
 //    item1.optionRowHeight = 50;
 //    item1.titleSelectColor = [UIColor redColor];
 //    item1.singleSelectImage = [UIImage imageNamed:@"ic_choosed"];
     
-    // 多选
+    // 构建选项 多选
     DKPullDownMenuMultiSelectItem *item2 = [DKPullDownMenuMultiSelectItem itemWithTitle:@"多选" subTitles:@[@"多选A",@"多选B",@"多选C",@"多选D",@"多选E",@"多选F",@"多选G"]];
 //    item2.optionMenuHeight = 300;
 //    item2.optionRowHeight = 80;
+//    item2.multiNormalImage = [UIImage imageNamed:@"ic_choosing"];
+//    item2.multiSelectImage = [UIImage imageNamed:@"ic_choosed"];
+//    item2.confirmBackgroundColor = [UIColor redColor];
+//    item2.subTitleTotal = @"全部";
     
-    // 自定义
+    // 构建选项 自定义
     DKCustomDemoViewController *customVc = [[DKCustomDemoViewController alloc] init];
     DKPullDownMenuCustomItem *item3 = [DKPullDownMenuCustomItem itemWithTitle:@"自定义" customViewController:customVc];
 //    item3.optionMenuHeight = 400;

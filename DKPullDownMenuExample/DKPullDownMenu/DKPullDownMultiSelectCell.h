@@ -10,4 +10,6 @@
 
 @interface DKPullDownMultiSelectCell : UITableViewCell
 @property (nonatomic, assign) BOOL isSelected;
+@property (nonatomic, weak) UIImage *normalImage;
+@property (nonatomic, weak) UIImage *selectImage;
 @end

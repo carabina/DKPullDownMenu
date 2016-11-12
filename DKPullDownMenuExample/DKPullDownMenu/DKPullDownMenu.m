@@ -163,6 +163,9 @@
         CGFloat optionMenuH = item.subTitles.count * item.optionRowHeight;
         // 多选的时候算多个按钮的高度和两个间距
         if ([item isKindOfClass:[DKPullDownMenuMultiSelectItem class]]) {
+            if (item.subTitles.count > 1) {
+                optionMenuH = (item.subTitles.count + 1) * item.optionRowHeight;
+            }
             optionMenuH += 10 * 2 + 40;
         }
         // Custom default

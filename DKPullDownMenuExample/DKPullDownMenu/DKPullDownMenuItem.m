@@ -83,6 +83,46 @@
 
 @implementation DKPullDownMenuMultiSelectItem
 
+- (NSString *)confirmTitle
+{
+    if (!_confirmTitle || !_confirmTitle.length) {
+        _confirmTitle = @"确定";
+    }
+    return _confirmTitle;
+}
+
+- (UIFont *)confirmTitleFont
+{
+    if (!_confirmTitleFont) {
+        _confirmTitleFont = [UIFont systemFontOfSize:15];
+    }
+    return _confirmTitleFont;
+}
+
+- (UIColor *)confirmTitleColor
+{
+    if (!_confirmTitleColor) {
+        _confirmTitleColor = [UIColor whiteColor];
+    }
+    return _confirmTitleColor;
+}
+
+- (UIColor *)confirmBackgroundColor
+{
+    if (!_confirmBackgroundColor) {
+        _confirmBackgroundColor = [UIColor colorWithRed:23/255.0 green:132/255.0 blue:235/255.0 alpha:1];
+    }
+    return _confirmBackgroundColor;
+}
+
+- (NSString *)subTitleTotal
+{
+    if (!_subTitleTotal || !_subTitleTotal.length) {
+        _subTitleTotal = @"全选";
+    }
+    return _subTitleTotal;
+}
+
 @end
 
 @implementation DKPullDownMenuCustomItem
