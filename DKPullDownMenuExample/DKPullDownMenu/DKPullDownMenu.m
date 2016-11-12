@@ -50,7 +50,19 @@
     DKPullDownMenuShareManager.separateLineColor = separateLineColor;
 }
 
-- (void)setSeparateLineTopMargin:(NSInteger)separateLineTopMargin
+- (void)setHeadSeparateLineAvailable:(BOOL)headSeparateLineAvailable
+{
+    _headSeparateLineAvailable = headSeparateLineAvailable;
+    DKPullDownMenuShareManager.headSeparateLineAvailable = headSeparateLineAvailable;
+}
+
+- (void)setBottomSeparateLineAvailable:(BOOL)bottomSeparateLineAvailable
+{
+    _bottomSeparateLineAvailable = bottomSeparateLineAvailable;
+    DKPullDownMenuShareManager.bottomSeparateLineAvailable = bottomSeparateLineAvailable;
+}
+
+- (void)setSeparateLineTopMargin:(CGFloat)separateLineTopMargin
 {
     _separateLineTopMargin = separateLineTopMargin;
     DKPullDownMenuShareManager.separateLineTopMargin = separateLineTopMargin;
@@ -130,8 +142,8 @@
     [button setTitle:_titles[index] forState:UIControlStateNormal];
     [button setTitleColor:item.titleNormalColor forState:UIControlStateNormal];
     [button setTitleColor:item.titleSelectColor forState:UIControlStateSelected];
-    [button setImage:[UIImage imageNamed:@"titleBtn_down"] forState:UIControlStateNormal];
-    [button setImage:[UIImage imageNamed:@"titleBtn_up"] forState:UIControlStateSelected];
+    [button setImage:item.normalImage forState:UIControlStateNormal];
+    [button setImage:item.selectImage forState:UIControlStateSelected];
     
     return button;
 }
@@ -151,6 +163,10 @@
         // 多选的时候算多个按钮的高度和两个间距
         if ([item isKindOfClass:[DKPullDownMenuMultiSelectItem class]]) {
             optionMenuH += 10 * 2 + 40;
+        }
+        // Custom default
+        if (!optionMenuH) {
+            optionMenuH = optionMenuMaxH;
         }
         return optionMenuH > optionMenuMaxH ? optionMenuMaxH : optionMenuH;
     }

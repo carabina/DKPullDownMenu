@@ -26,6 +26,8 @@
 @property (nonatomic, strong) UIView *contentView;
 /** 下拉菜单蒙版 */
 @property (nonatomic, strong) DKPullDownCover *coverView;
+/** 下拉菜单顶部View */
+@property (nonatomic, weak) UIView *headLine;
 /** 下拉菜单底部View */
 @property (nonatomic, weak) UIView *bottomLine;
 /** 观察者 */
@@ -39,6 +41,8 @@ NSString *const DKPullDownMenuItemAssociateVcIdentifier = @"DKPullDownMenuItemAs
 NSString *const DKPullDownMenuVcAssociateOpRowHIdentifier = @"DKPullDownMenuVcAssociateOpRowHIdentifier";
 
 static NSString *const kKeyPathSeparateLineColor = @"separateLineColor";
+static NSString *const kKeyPathBottomSeparateLineAvailable = @"bottomSeparateLineAvailable";
+static NSString *const kKeyPathHeadSeparateLineAvailable = @"headSeparateLineAvailable";
 static NSString *const kKeyPathSeparateLineTopMargin = @"separateLineTopMargin";
 static NSString *const kKeyPathCoverColor = @"coverColor";
 
@@ -92,6 +96,7 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
         // 蒙版点击block
         _coverView.coverClickBlock = ^{
             [weakSelf dismiss];
+            [[UIApplication sharedApplication].keyWindow endEditing:YES];
         };
     }
     return _coverView;
@@ -126,6 +131,8 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
     [[NSNotificationCenter defaultCenter] removeObserver:_observer];
     
     KRemoveObserver(kKeyPathSeparateLineColor)
+    KRemoveObserver(kKeyPathHeadSeparateLineAvailable)
+    KRemoveObserver(kKeyPathBottomSeparateLineAvailable)
     KRemoveObserver(kKeyPathSeparateLineTopMargin)
     KRemoveObserver(kKeyPathCoverColor)
 }
@@ -152,6 +159,8 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
     
     // 添加观察者
     KAddObserver(kKeyPathSeparateLineColor)
+    KAddObserver(kKeyPathHeadSeparateLineAvailable)
+    KAddObserver(kKeyPathBottomSeparateLineAvailable)
     KAddObserver(kKeyPathSeparateLineTopMargin)
     KAddObserver(kKeyPathCoverColor)
 }
@@ -177,10 +186,15 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
             separateLine.frame = CGRectMake(CGRectGetMaxX(btn.frame), DKPullDownMenuShareManager.separateLineTopMargin, 1, btnH - 2 * DKPullDownMenuShareManager.separateLineTopMargin);
         }
     }
+    // 设置顶部view位置
+    CGFloat headX = 0;
+    CGFloat headY = btnY;
+    CGFloat headH = 1;
+    CGFloat headW = self.bounds.size.width;
+    _headLine.frame = CGRectMake(headX, headY, headW, headH);
     // 设置底部View位置
-    CGFloat bottomH = 1;
-    CGFloat bottomY = btnH - bottomH;
-    _bottomLine.frame = CGRectMake(0, bottomY, self.bounds.size.width, bottomH);
+    CGFloat bottomY = btnH - headH;
+    _bottomLine.frame = CGRectMake(headX, bottomY, headW, headH);
 }
 
 - (void)willMoveToWindow:(UIWindow *)newWindow
@@ -191,18 +205,22 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
-    if ([keyPath isEqualToString:kKeyPathSeparateLineColor]) {
+    if ([keyPath isEqualToString:kKeyPathSeparateLineColor]) { // 分割线颜色
         [self.separateLines enumerateObjectsUsingBlock:^(UIView * _Nonnull separateLine, NSUInteger idx, BOOL * _Nonnull stop) {
             separateLine.backgroundColor = DKPullDownMenuShareManager.separateLineColor;
         }];
-    } else if ([keyPath isEqualToString:kKeyPathSeparateLineTopMargin]) {
+    } else if ([keyPath isEqualToString:kKeyPathBottomSeparateLineAvailable]) { // 顶部分割线
+        _bottomLine.hidden = !DKPullDownMenuShareManager.bottomSeparateLineAvailable;
+    } else if ([keyPath isEqualToString:kKeyPathBottomSeparateLineAvailable]) { // 底部分割线
+        _bottomLine.hidden = !DKPullDownMenuShareManager.bottomSeparateLineAvailable;
+    } else if ([keyPath isEqualToString:kKeyPathSeparateLineTopMargin]) { // 分割线顶部间距
         [self.separateLines enumerateObjectsUsingBlock:^(UIView * _Nonnull separateLine, NSUInteger idx, BOOL * _Nonnull stop) {
             CGRect tempFrame = separateLine.frame;
             tempFrame.origin.y = DKPullDownMenuShareManager.separateLineTopMargin;
             tempFrame.size.height = self.bounds.size.height - 2 * DKPullDownMenuShareManager.separateLineTopMargin;
             separateLine.frame = tempFrame;
         }];
-    } else if ([keyPath isEqualToString:kKeyPathCoverColor]) {
+    } else if ([keyPath isEqualToString:kKeyPathCoverColor]) { // 蒙版颜色
         _coverView.backgroundColor = DKPullDownMenuShareManager.coverColor;
     }
 }
@@ -310,9 +328,17 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
         [self.separateLines addObject:separateLine];
     }
     
+    // 添加顶部view
+    UIView *headView = [[UIView alloc] init];
+    headView.backgroundColor = DKPullDownMenuShareManager.separateLineColor;
+    headView.hidden = !DKPullDownMenuShareManager.isHeadSeparateLineAvailable;
+    _headLine = headView;
+    [self addSubview:headView];
+    
     // 添加底部View
     UIView *bottomView = [[UIView alloc] init];
     bottomView.backgroundColor = DKPullDownMenuShareManager.separateLineColor;
+    bottomView.hidden = !DKPullDownMenuShareManager.isBottomSeparateLineAvailable;
     _bottomLine = bottomView;
     [self addSubview:bottomView];
     
@@ -328,8 +354,8 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
         button.selected = NO;
     }
     // 移除蒙版
-    self.coverView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [UIView animateWithDuration:0.25 animations:^{
+        self.coverView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
         CGRect frame = self.contentView.frame;
         frame.size.height = 0;
         self.contentView.frame = frame;

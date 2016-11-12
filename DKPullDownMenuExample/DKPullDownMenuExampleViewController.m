@@ -20,15 +20,11 @@
 {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor lightGrayColor];
+//    self.view.backgroundColor = [UIColor groupTableViewBackgroundColor];
     
     DKPullDownMenu *menu = [[DKPullDownMenu alloc] init];
     menu.frame = CGRectMake(0, 20, self.view.frame.size.width, 44);
     [self.view addSubview:menu];
-    
-    menu.separateLineTopMargin = 0;
-    menu.coverColor = [UIColor clearColor];
-    menu.separateLineColor = [UIColor clearColor];
     
     // 单选
     DKPullDownMenuItem *item1 = [DKPullDownMenuItem itemWithTitle:@"单选" subTitles:@[@"单选A",@"单选B"]];
@@ -44,9 +40,14 @@
     // 自定义
     DKCustomDemoViewController *customVc = [[DKCustomDemoViewController alloc] init];
     DKPullDownMenuCustomItem *item3 = [DKPullDownMenuCustomItem itemWithTitle:@"自定义" customViewController:customVc];
-    item3.optionMenuHeight = 400;
+//    item3.optionMenuHeight = 400;
     
     menu.pullDownMenuItems = @[item1,item2,item3];
+    menu.separateLineTopMargin = 15;
+    menu.coverColor = [UIColor lightGrayColor];
+    menu.separateLineColor = [UIColor lightGrayColor];
+//    menu.bottomSeparateLineAvailable = YES;
+//    menu.headSeparateLineAvailable = YES;
 }
 
 

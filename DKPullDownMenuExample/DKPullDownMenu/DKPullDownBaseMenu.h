@@ -49,11 +49,7 @@
 @end
 
 @interface DKPullDownBaseMenu : UIView
-
 /** 下拉菜单数据源 */
 @property (nonatomic, weak) id<DKPullDownMenuDataSource> dataSource;
-
-/** 刷新下拉菜单 */
-- (void)reload;
 
 @end

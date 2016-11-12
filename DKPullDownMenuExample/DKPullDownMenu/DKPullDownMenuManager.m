@@ -46,7 +46,7 @@ static DKPullDownMenuManager *_instance;
 
 - (UIColor *)separateLineColor
 {
-    return _separateLineColor ? _separateLineColor : [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:1];
+    return _separateLineColor ? _separateLineColor : [UIColor colorWithRed:66/255.0 green:66/255.0 blue:66/255.0 alpha:1];
 }
 
 - (NSInteger)separateLineTopMargin
@@ -56,7 +56,7 @@ static DKPullDownMenuManager *_instance;
 
 - (UIColor *)coverColor
 {
-    return _coverColor ? _coverColor : [UIColor colorWithRed:221/255.0 green:221/255.0 blue:221/255.0 alpha:0.7];
+    return _coverColor ? _coverColor : [UIColor colorWithRed:99/255.0 green:99/255.0 blue:99/255.0 alpha:0.3];
 }
 
 @end

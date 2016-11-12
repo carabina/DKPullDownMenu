@@ -87,7 +87,7 @@ static NSString *const kPullDownMultiSubTitleTotal = @"全部";
 - (void)setupConfirmBtn
 {
     UIButton *confrimBtn = [UIButton buttonWithType:UIButtonTypeSystem];
-    confrimBtn.backgroundColor = [UIColor blueColor];
+    confrimBtn.backgroundColor = [UIColor colorWithRed:23/255.0 green:132/255.0 blue:235/255.0 alpha:1];
     [confrimBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [confrimBtn setTitle:@"确定" forState:UIControlStateNormal];
     [confrimBtn addTarget:self action:@selector(confirmBtnClick) forControlEvents:UIControlEventTouchUpInside];

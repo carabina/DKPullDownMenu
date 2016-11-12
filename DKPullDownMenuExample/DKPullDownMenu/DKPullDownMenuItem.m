@@ -8,6 +8,9 @@
 
 #import "DKPullDownMenuItem.h"
 
+#define DKPhotosBundle [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"DKPullDownMenu.bundle"]]
+#define DKImage(imageName) [UIImage imageWithContentsOfFile:[[DKPhotosBundle resourcePath] stringByAppendingPathComponent:imageName]]
+
 @implementation DKPullDownMenuItem
 
 #pragma mark - Getter && Setter
@@ -19,12 +22,12 @@
 
 - (UIImage *)normalImage
 {
-    return _normalImage ? _normalImage : nil;
+    return _normalImage ? _normalImage : DKImage(@"titleBtn_down");
 }
 
 - (UIImage *)selectImage
 {
-    return _selectImage ? _selectImage : nil;
+    return _selectImage ? _selectImage : DKImage(@"titleBtn_up");
 }
 
 - (UIFont *)titleFont
