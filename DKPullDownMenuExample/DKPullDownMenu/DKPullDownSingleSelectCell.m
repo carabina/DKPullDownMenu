@@ -19,6 +19,8 @@
 
 - (void)setCheckImage:(UIImage *)checkImage
 {
+    if (!checkImage) return;
+    
     _checkImage = checkImage;
     self.checkView.image = checkImage;
 }
@@ -27,7 +29,7 @@
 {
     if (!_checkView) {
         _checkView = [[UIImageView alloc] init];
-        _checkView.bounds = CGRectMake(0, 0, 20, 20);
+        _checkView.bounds = CGRectMake(0, 0, 18, 18);
         _checkView.image = DKImage(@"single_select");
         _checkView.contentMode = UIViewContentModeScaleAspectFit;
         self.accessoryView = _checkView;

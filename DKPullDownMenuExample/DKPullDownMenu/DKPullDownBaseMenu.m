@@ -197,7 +197,7 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
     _headLine.frame = CGRectMake(headX, headY, headW, headH);
     // 设置底部View位置
     CGFloat bottomY = btnH - headH;
-    _bottomLine.frame = CGRectMake(headX, bottomY, headW, headH);
+    _bottomLine.frame = CGRectMake(headX, bottomY, headW, 0.3);
 }
 
 - (void)willMoveToWindow:(UIWindow *)newWindow

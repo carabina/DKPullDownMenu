@@ -31,7 +31,7 @@
 //    item1.optionMenuHeight = 200;
 //    item1.optionRowHeight = 50;
 //    item1.titleSelectColor = [UIColor redColor];
-    item1.singleSelectImage = [UIImage imageNamed:@"ic_choosed"];
+//    item1.singleSelectImage = [UIImage imageNamed:@"ic_choosed"];
     
     // 多选
     DKPullDownMenuMultiSelectItem *item2 = [DKPullDownMenuMultiSelectItem itemWithTitle:@"多选" subTitles:@[@"多选A",@"多选B",@"多选C",@"多选D",@"多选E",@"多选F",@"多选G"]];
@@ -47,7 +47,7 @@
     menu.separateLineTopMargin = 15;
     menu.coverColor = [UIColor lightGrayColor];
     menu.separateLineColor = [UIColor lightGrayColor];
-//    menu.bottomSeparateLineAvailable = YES;
+    menu.bottomSeparateLineAvailable = YES;
 //    menu.headSeparateLineAvailable = YES;
 }
 

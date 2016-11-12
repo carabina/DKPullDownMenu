@@ -13,8 +13,10 @@
 
 @interface DKPullDownSingleSelectViewController ()
 @property (nonatomic, strong) DKPullDownMenuSingleSelectItem *item;
+/** 子标题数组 */
 @property (nonatomic, copy) NSArray<NSString *> *titles;
-@property (nonatomic, assign) NSInteger selectedCol;
+/** 记录选中的行 */
+@property (nonatomic, assign) NSInteger selectedRow;
 @end
 
 @implementation DKPullDownSingleSelectViewController
@@ -28,13 +30,18 @@
     [self setupItem];
     
     [self setupTableView];
+    
+    _selectedRow = -1;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_selectedCol inSection:0];
-    [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    
+    if (_selectedRow >= 0) { // 已经有选中
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:_selectedRow inSection:0];
+        [self.tableView selectRowAtIndexPath:indexPath animated:YES scrollPosition:UITableViewScrollPositionNone];
+    }
 }
 
 /** 画完整分割线 */
@@ -88,9 +95,6 @@
     if ([self.item isKindOfClass:[DKPullDownMenuSingleSelectItem class]]) {
         cell.checkImage = self.item.singleSelectImage;
     }
-    if (indexPath.row == 0) {
-        [cell setSelected:YES animated:NO];
-    }
     
     return cell;
 }
@@ -109,13 +113,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _selectedCol = indexPath.row;
+    _selectedRow = indexPath.row;
     
     // 选中当前cell
     DKPullDownSingleSelectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     // 更新菜单标题
     [[NSNotificationCenter defaultCenter] postNotificationName:DKPullDownMenuTitleDidUpdatedNotification object:self userInfo:@{self.item.title:cell.textLabel.text}];
 }
-
 
 @end

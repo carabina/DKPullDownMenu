@@ -79,11 +79,6 @@
 
 @implementation DKPullDownMenuSingleSelectItem
 
-- (void)setSingleSelectImage:(UIImage *)singleSelectImage
-{
-    _singleSelectImage = singleSelectImage;
-}
-
 @end
 
 @implementation DKPullDownMenuMultiSelectItem
