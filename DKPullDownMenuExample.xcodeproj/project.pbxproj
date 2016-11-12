@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D72CAE131DD570FA00D0F08E /* DKCustomDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D72CAE111DD570FA00D0F08E /* DKCustomDemoViewController.m */; };
 		D72CAE141DD570FA00D0F08E /* DKCustomDemoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D72CAE121DD570FA00D0F08E /* DKCustomDemoViewController.xib */; };
+		D744FA6C1DD7070500615D3B /* DKPullDownResult.m in Sources */ = {isa = PBXBuildFile; fileRef = D744FA6B1DD7070500615D3B /* DKPullDownResult.m */; };
 		D7599C5F1DD6CB7900B47746 /* DKPullDownMenu.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D7599C5E1DD6CB7900B47746 /* DKPullDownMenu.bundle */; };
 		D7B9FCFB1DD417A200356F4A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FCFA1DD417A200356F4A /* main.m */; };
 		D7B9FCFE1DD417A200356F4A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D7B9FCFD1DD417A200356F4A /* AppDelegate.m */; };
@@ -33,6 +34,8 @@
 		D72CAE101DD570FA00D0F08E /* DKCustomDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKCustomDemoViewController.h; sourceTree = "<group>"; };
 		D72CAE111DD570FA00D0F08E /* DKCustomDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKCustomDemoViewController.m; sourceTree = "<group>"; };
 		D72CAE121DD570FA00D0F08E /* DKCustomDemoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DKCustomDemoViewController.xib; sourceTree = "<group>"; };
+		D744FA6A1DD7070500615D3B /* DKPullDownResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DKPullDownResult.h; sourceTree = "<group>"; };
+		D744FA6B1DD7070500615D3B /* DKPullDownResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DKPullDownResult.m; sourceTree = "<group>"; };
 		D7599C5E1DD6CB7900B47746 /* DKPullDownMenu.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DKPullDownMenu.bundle; sourceTree = "<group>"; };
 		D7B9FCF61DD417A200356F4A /* DKPullDownMenuExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DKPullDownMenuExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7B9FCFA1DD417A200356F4A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -149,6 +152,8 @@
 				D7B9FD301DD49BF300356F4A /* DKPullDownSubTitle.m */,
 				D7B9FD291DD44FEA00356F4A /* DKPullDownMenuManager.h */,
 				D7B9FD2A1DD44FEA00356F4A /* DKPullDownMenuManager.m */,
+				D744FA6A1DD7070500615D3B /* DKPullDownResult.h */,
+				D744FA6B1DD7070500615D3B /* DKPullDownResult.m */,
 			);
 			path = DKPullDownMenu;
 			sourceTree = "<group>";
@@ -227,6 +232,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D744FA6C1DD7070500615D3B /* DKPullDownResult.m in Sources */,
 				D7B9FD191DD4265300356F4A /* DKPullDownSingleSelectViewController.m in Sources */,
 				D7B9FD221DD4367300356F4A /* DKPullDownTitleButton.m in Sources */,
 				D7B9FD161DD41B1700356F4A /* DKPullDownCover.m in Sources */,

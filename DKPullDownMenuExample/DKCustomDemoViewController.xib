@@ -20,16 +20,16 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.29999999999999999" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="jSz-OD-sKF">
-                    <rect key="frame" x="18" y="101" width="339" height="31"/>
+                    <rect key="frame" x="18" y="95" width="339" height="31"/>
                 </slider>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="蛋壳创意" borderStyle="bezel" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="L0J-uz-LbT">
-                    <rect key="frame" x="148" y="54" width="79" height="22"/>
+                    <rect key="frame" x="148" y="48" width="79" height="22"/>
                     <nil key="textColor"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="zi3-xx-yMp">
-                    <rect key="frame" x="20" y="50" width="51" height="31"/>
+                    <rect key="frame" x="20" y="44" width="51" height="31"/>
                 </switch>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -39,7 +39,7 @@
                 <constraint firstItem="L0J-uz-LbT" firstAttribute="centerY" secondItem="zi3-xx-yMp" secondAttribute="centerY" id="d2U-YQ-aql"/>
                 <constraint firstItem="jSz-OD-sKF" firstAttribute="top" secondItem="zi3-xx-yMp" secondAttribute="bottom" constant="20" id="eXN-w1-ujt"/>
                 <constraint firstItem="L0J-uz-LbT" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="hjw-At-brv"/>
-                <constraint firstItem="zi3-xx-yMp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="50" id="izW-nf-St5"/>
+                <constraint firstItem="zi3-xx-yMp" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="44" id="izW-nf-St5"/>
                 <constraint firstItem="zi3-xx-yMp" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="w2a-9n-3wv"/>
             </constraints>
             <point key="canvasLocation" x="34.5" y="53.5"/>
