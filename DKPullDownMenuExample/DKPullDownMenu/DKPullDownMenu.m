@@ -101,6 +101,7 @@
     DKPullDownBaseMenu *menu = [[DKPullDownBaseMenu alloc] initWithFrame:self.bounds];
     menu.dataSource = self;
     self.menu = menu;
+    DKPullDownMenuShareManager.menu = menu;
     [self addSubview:menu];
     
     NSMutableArray *titles = [NSMutableArray array];

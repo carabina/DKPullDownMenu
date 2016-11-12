@@ -8,19 +8,31 @@
 
 #import "DKPullDownSingleSelectCell.h"
 
+#define DKPhotosBundle [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"DKPullDownMenu.bundle"]]
+#define DKImage(imageName) [UIImage imageWithContentsOfFile:[[DKPhotosBundle resourcePath] stringByAppendingPathComponent:imageName]]
+
 @interface DKPullDownSingleSelectCell ()
-@property (nonatomic, strong) UIImageView *cheakView;
+@property (nonatomic, strong) UIImageView *checkView;
 @end
 
 @implementation DKPullDownSingleSelectCell
 
-- (UIImageView *)cheakView
+- (void)setCheckImage:(UIImage *)checkImage
 {
-    if (_cheakView == nil) {
-        _cheakView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"single_select"]];
-        self.accessoryView = _cheakView;
+    _checkImage = checkImage;
+    self.checkView.image = checkImage;
+}
+
+- (UIImageView *)checkView
+{
+    if (!_checkView) {
+        _checkView = [[UIImageView alloc] init];
+        _checkView.bounds = CGRectMake(0, 0, 20, 20);
+        _checkView.image = DKImage(@"single_select");
+        _checkView.contentMode = UIViewContentModeScaleAspectFit;
+        self.accessoryView = _checkView;
     }
-    return _cheakView;
+    return _checkView;
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -35,7 +47,7 @@
 {
     [super setSelected:selected animated:animated];
 
-    self.cheakView.hidden = !selected;
+    self.checkView.hidden = !selected;
 }
 
 @end

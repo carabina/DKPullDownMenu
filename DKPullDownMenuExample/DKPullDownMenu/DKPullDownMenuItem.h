@@ -41,7 +41,7 @@
 
 @interface DKPullDownMenuSingleSelectItem : DKPullDownMenuItem
 /** 选中图片 */
-@property (nonatomic, weak) UIImage *singleSelectImage;
+@property (nonatomic, strong) UIImage *singleSelectImage;
 @end
 
 @interface DKPullDownMenuMultiSelectItem : DKPullDownMenuItem

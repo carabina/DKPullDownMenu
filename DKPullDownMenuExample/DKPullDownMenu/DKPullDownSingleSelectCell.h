@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface DKPullDownSingleSelectCell : UITableViewCell
-
+@property (nonatomic, weak) UIImage *checkImage;
 @end

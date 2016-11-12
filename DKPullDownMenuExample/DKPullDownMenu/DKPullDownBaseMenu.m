@@ -155,6 +155,9 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
         if (allValues.count > 1 || [allValues.firstObject isKindOfClass:[NSArray class]]) return ;
         // 设置按钮标题
         [btn setTitle:allValues.firstObject forState:UIControlStateNormal];
+        
+        // 选中的数据
+        NSLog(@"%@",note.userInfo);
     }];
     
     // 添加观察者
@@ -238,7 +241,7 @@ static NSString *const kKeyPathCoverColor = @"coverColor";
         otherButton.selected = NO;
     }
     
-    if (button.selected == YES) {
+    if (button.isSelected == YES) {
         // 弹出蒙版
         self.coverView.hidden = NO;
         // 获取索引

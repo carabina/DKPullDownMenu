@@ -8,6 +8,9 @@
 
 #import "DKPullDownMultiSelectCell.h"
 
+#define DKPhotosBundle [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"DKPullDownMenu.bundle"]]
+#define DKImage(imageName) [UIImage imageWithContentsOfFile:[[DKPhotosBundle resourcePath] stringByAppendingPathComponent:imageName]]
+
 @interface DKPullDownMultiSelectCell ()
 @property (nonatomic, strong) UIButton *cheakView;
 @end
@@ -19,8 +22,8 @@
     if (!_cheakView) {
         _cheakView = [UIButton buttonWithType:UIButtonTypeCustom];
         _cheakView.userInteractionEnabled = NO;
-        [_cheakView setImage:[UIImage imageNamed:@"multi_normal"] forState:UIControlStateNormal];
-        [_cheakView setImage:[UIImage imageNamed:@"multi_select"] forState:UIControlStateSelected];
+        [_cheakView setImage:DKImage(@"multi_normal") forState:UIControlStateNormal];
+        [_cheakView setImage:DKImage(@"multi_select") forState:UIControlStateSelected];
         [_cheakView sizeToFit];
         self.accessoryView = _cheakView;
     }

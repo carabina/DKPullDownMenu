@@ -12,6 +12,7 @@
 #import <objc/runtime.h>
 
 @interface DKPullDownSingleSelectViewController ()
+@property (nonatomic, strong) DKPullDownMenuSingleSelectItem *item;
 @property (nonatomic, copy) NSArray<NSString *> *titles;
 @property (nonatomic, assign) NSInteger selectedCol;
 @end
@@ -24,9 +25,9 @@
 {
     [super viewDidLoad];
     
-    [self setupTableView];
+    [self setupItem];
     
-    [self setupTitles];
+    [self setupTableView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -47,28 +48,30 @@
     }
 }
 
-- (void)setupTableView
-{
-    self.tableView.tableFooterView = [[UIView alloc] init];
-    [self.tableView registerClass:[DKPullDownSingleSelectCell class] forCellReuseIdentifier:NSStringFromClass([DKPullDownSingleSelectCell class])];
-    
-}
-
-- (void)setupTitles
+- (void)setupItem
 {
     __weak typeof(self) weakSelf = self;
     [DKPullDownMenuShareManager.pullDownMenuItems enumerateObjectsUsingBlock:^(DKPullDownMenuItem * _Nonnull item, NSUInteger idx, BOOL * _Nonnull stop) {
         id vc = objc_getAssociatedObject(item, &DKPullDownMenuItemAssociateVcIdentifier);
         if (self == vc) {
-            // 子标题
-            weakSelf.titles = item.subTitles;
-            // 行高
-            weakSelf.tableView.rowHeight = item.optionRowHeight;
-            
-            [weakSelf.tableView reloadData];
+            weakSelf.item = (DKPullDownMenuSingleSelectItem *)item;
             *stop = YES;
         }
     }];
+}
+
+- (void)setupTableView
+{
+    // 注册
+    [self.tableView registerClass:[DKPullDownSingleSelectCell class] forCellReuseIdentifier:NSStringFromClass([DKPullDownSingleSelectCell class])];
+    // 行高
+    self.tableView.rowHeight = self.item.optionRowHeight;
+    // 清除底部多余的分割线
+    self.tableView.tableFooterView = [[UIView alloc] init];
+    // 子标题
+    self.titles = self.item.subTitles;
+    // 刷新
+    [self.tableView reloadData];
 }
 
 #pragma mark - <UITableViewDataSource>
@@ -82,6 +85,9 @@
 {
     DKPullDownSingleSelectCell *cell = [tableView dequeueReusableCellWithIdentifier:NSStringFromClass([DKPullDownSingleSelectCell class])];
     cell.textLabel.text = _titles[indexPath.row];
+    if ([self.item isKindOfClass:[DKPullDownMenuSingleSelectItem class]]) {
+        cell.checkImage = self.item.singleSelectImage;
+    }
     if (indexPath.row == 0) {
         [cell setSelected:YES animated:NO];
     }
@@ -108,7 +114,7 @@
     // 选中当前cell
     DKPullDownSingleSelectCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     // 更新菜单标题
-    [[NSNotificationCenter defaultCenter] postNotificationName:DKPullDownMenuTitleDidUpdatedNotification object:self userInfo:@{@"title":cell.textLabel.text}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:DKPullDownMenuTitleDidUpdatedNotification object:self userInfo:@{self.item.title:cell.textLabel.text}];
 }
 
 

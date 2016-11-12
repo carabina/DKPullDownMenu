@@ -16,8 +16,11 @@ UIKIT_EXTERN NSString *const DKPullDownMenuTitleDidUpdatedNotification;
 /** item关联控制器的标识 */
 UIKIT_EXTERN NSString *const DKPullDownMenuItemAssociateVcIdentifier;
 
+@class DKPullDownBaseMenu;
+
 @interface DKPullDownMenuManager : NSObject
 @property (nonatomic, strong) NSArray<DKPullDownMenuItem *> *pullDownMenuItems;
+@property (nonatomic, weak) DKPullDownBaseMenu *menu;
 /** 分割线颜色 */
 @property (nonatomic, strong) UIColor *separateLineColor;
 /** 是否添加顶部分割线 */
